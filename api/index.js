@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const login = require('./auth')
+const users = require('./users')
+const profile = require('./profile')
 
 const server = express()
 
@@ -13,5 +15,9 @@ server.use(morgan('dev'))
 server.use(cors())
 
 server.use('/auth', login)
+
+server.use('/users', users)
+
+server.use('/profile', profile)
 
 module.exports = server

@@ -1,4 +1,4 @@
-const db = require('../../data')
+const db = require('..')
 
 module.exports = {
 
@@ -6,10 +6,8 @@ module.exports = {
 
         const query = db(`${database}`)
 
-        return id ?
-            query.where(id).first()
-            :
-            query
+        return id &&
+            query.where({ id }).select('id', 'username').first()
 
     },
 

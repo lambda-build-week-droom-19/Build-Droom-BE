@@ -4,13 +4,16 @@ const jwtKey = process.env.JWT_SECRET || 'dougnuts'
 
 module.exports = (req, res, next) => {
 
-    const token = req.get('Authorization')
+    const { authorization } = req.headers
 
-    if (token) {
+    if (authorization) {
 
-        jwt.verify(token, jwtKey, (err, decoded) => {
+        jwt.verify(authorization, jwtKey, (err, decoded) => {
 
-            if (err) return res.status(401).json(err)
+            if (err) {
+                console.log(err)
+                return res.status(401).json(err)
+            }
 
             req.decoded = decoded
 

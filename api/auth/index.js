@@ -1,55 +1,8 @@
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 
-const auth = require('./auth-middleware/auth')
 const makeToken = require('./auth-middleware/makeToken')
-const Users = require('./model')
-
-router.get('/:db', auth, async (req, res) => {
-
-    const { db } = req.params
-
-    try {
-
-        const get = await Users.find(db)
-
-        res.status(200).json(get)
-
-    } catch (err) {
-
-        console.log(err)
-
-        res.status(500).json({
-            error: 'Internal Server Error',
-            err
-        })
-
-    }
-
-})
-
-router.get('/:db/:id', auth, async (req, res) => {
-
-    const { db, id } = req.params
-
-    try {
-
-        const getId = await Users.find(db, id)
-
-        res.status(200).json(getId)
-
-    } catch (err) {
-
-        console.log(err)
-
-        res.status(500).json({
-            error: 'Internal Server Error',
-            err
-        })
-
-    }
-
-})
+const Users = require('../../data/actions')
 
 router.post('/:db/register', async (req, res) => {
 
@@ -108,6 +61,7 @@ router.post('/:db/login', async (req, res) => {
 
             res.status(200).json({
                 message: `Welcome, ${username}!`,
+                id: user.id,
                 token
             })
 
