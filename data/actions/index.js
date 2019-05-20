@@ -22,11 +22,29 @@ module.exports = {
 
     },
 
-    update: (database, id, changes) => {
+    update: async (database, id, changes) => {
+
+        if (database === 'profile') {
+
+            await db(`${database}`)
+                .where({ seeker_id: id })
+                .first()
+                .update(changes)
+
+            return db(`${database}`)
+                .where({ seeker_id: id })
+                .first()
+
+        }
+
+        await db(`${database}`)
+            .where({ id })
+            .first()
+            .update(changes)
 
         return db(`${database}`)
             .where({ id })
-            .update(changes)
+            .first()
 
     },
 

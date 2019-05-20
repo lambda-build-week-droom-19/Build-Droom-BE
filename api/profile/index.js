@@ -115,6 +115,8 @@ router.put('/:db', auth, async (req, res) => {
 
     const { id } = req.headers
 
+    const { body } = req
+
     try {
 
         switch (db) {
