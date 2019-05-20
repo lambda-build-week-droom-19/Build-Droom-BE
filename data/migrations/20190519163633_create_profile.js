@@ -4,6 +4,7 @@ exports.up = function (knex, Promise) {
 
         col
             .integer('seeker_id')
+            .unique()
             .notNullable()
             .references('id')
             .inTable('seeker')

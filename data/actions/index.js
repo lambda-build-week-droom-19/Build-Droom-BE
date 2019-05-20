@@ -9,13 +9,16 @@ module.exports = {
         return id ?
             query.where({ id }).select('id', 'username').first()
             :
-            query
+            (database === 'employer' || database === 'seeker') ?
+                query.select('id', 'username')
+                :
+                query
 
     },
 
-    add: (database, user) => {
+    add: (database, info) => {
 
-        return db(`${database}`).insert(user)
+        return db(`${database}`).insert(info)
 
     },
 
@@ -45,6 +48,14 @@ module.exports = {
 
     seek: (seeker_id) => {
         return db('profile').where({ seeker_id }).first()
-    }
+    },
+
+    findEmpWithNiche: (id) => {
+        return db('jobs').where({ 'niche': `${id}` })
+    },
+
+    findSeekWithNiche: (id) => {
+        return db('profile').where({ 'niche': `${id}` })
+    },
 
 }

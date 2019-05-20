@@ -25,6 +25,13 @@ exports.seed = function (knex, Promise) {
           location: 'Los Angeles, CA',
           requirements: 'Organization',
           niche: 3
+        },
+        {
+          employer_id: 4,
+          job_title: 'Junior Back End Developer',
+          location: 'Los Angeles, CA',
+          requirements: 'node',
+          niche: 1
         }
       ]);
     });
