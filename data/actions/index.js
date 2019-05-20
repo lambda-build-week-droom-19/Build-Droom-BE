@@ -51,11 +51,21 @@ module.exports = {
     },
 
     findEmpWithNiche: (id) => {
-        return db('jobs').where({ 'niche': `${id}` })
+        return db('jobs').where({ 'niche': `${id}` }).map(job => {
+            return {
+                ...job,
+                seen: job.seen === 1 ? true : false
+            }
+        })
     },
 
     findSeekWithNiche: (id) => {
-        return db('profile').where({ 'niche': `${id}` })
+        return db('profile').where({ 'niche': `${id}` }).map(profile => {
+            return {
+                ...profile,
+                seen: profile.seen === 1 ? true : false
+            }
+        })
     },
 
 }

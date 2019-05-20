@@ -10,28 +10,32 @@ exports.seed = function (knex, Promise) {
           job_title: 'Junior Front-End Developer',
           location: 'Los Angeles, CA',
           requirements: 'React, Redux, CSS',
-          niche: 1
+          niche: 1,
+          seen: false
         },
         {
           employer_id: 2,
           job_title: 'Bookseller',
           location: 'Los Angeles, CA',
           requirements: 'Sales, Customer Service',
-          niche: 2
+          niche: 2,
+          seen: false
         },
         {
           employer_id: 3,
           job_title: 'Store Stocking',
           location: 'Los Angeles, CA',
           requirements: 'Organization',
-          niche: 3
+          niche: 3,
+          seen: false
         },
         {
           employer_id: 4,
           job_title: 'Junior Back End Developer',
           location: 'Los Angeles, CA',
           requirements: 'node',
-          niche: 1
+          niche: 1,
+          seen: false
         }
       ]);
     });

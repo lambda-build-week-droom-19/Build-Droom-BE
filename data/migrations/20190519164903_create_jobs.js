@@ -30,6 +30,10 @@ exports.up = function (knex, Promise) {
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
 
+        col
+            .boolean('seen')
+            .notNullable()
+
     })
 };
 
