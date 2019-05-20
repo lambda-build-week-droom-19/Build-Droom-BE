@@ -2,6 +2,8 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('profile', col => {
 
+        col.increments()
+
         col
             .integer('seeker_id')
             .unique()

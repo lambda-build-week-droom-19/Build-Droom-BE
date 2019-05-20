@@ -109,4 +109,42 @@ router.post('/:db', auth, async (req, res) => {
 
 })
 
+router.put('/:db', auth, async (req, res) => {
+
+    const { db } = req.params
+
+    const { id } = req.headers
+
+    try {
+
+        switch (db) {
+            case 'seeker':
+                const updateSeeker = await Profiles.update('profile', id, body)
+
+                res.status(200).json(updateSeeker)
+                break
+            case 'job':
+                const updateJob = await Profiles.update('jobs', id, body)
+
+                res.status(200).json(updateJob)
+                break
+            default:
+                res.status(404).json({
+                    error: `/profile/${db} is not a valid endpoint. Please try again.`
+                })
+        }
+
+    } catch (err) {
+
+        console.log(err)
+
+        res.status(500).json({
+            error: 'Internal Server Error',
+            err
+        })
+
+    }
+
+})
+
 module.exports = router
