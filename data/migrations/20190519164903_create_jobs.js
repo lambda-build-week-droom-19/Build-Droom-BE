@@ -2,6 +2,8 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('jobs', col => {
 
+        col.increments()
+
         col
             .integer('employer_id')
             .notNullable()
@@ -33,6 +35,10 @@ exports.up = function (knex, Promise) {
         col
             .boolean('seen')
             .notNullable()
+
+        col
+            .timestamp('timestamp')
+            .unique()
 
     })
 };
