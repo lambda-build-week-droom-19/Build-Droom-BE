@@ -6,6 +6,7 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('profile').insert([
         {
+          id: 1,
           seeker_id: 4,
           first_name: 'John',
           last_name: 'Doe',
@@ -17,6 +18,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 2,
           seeker_id: 5,
           first_name: 'Jane',
           last_name: 'Doe',
@@ -28,6 +30,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 3,
           seeker_id: 6,
           first_name: 'Tyler',
           last_name: 'Farmer',

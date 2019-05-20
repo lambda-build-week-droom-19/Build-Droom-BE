@@ -6,6 +6,7 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('jobs').insert([
         {
+          id: 1,
           employer_id: 1,
           job_title: 'Junior Front-End Developer',
           location: 'Los Angeles, CA',
@@ -14,6 +15,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 2,
           employer_id: 2,
           job_title: 'Bookseller',
           location: 'Los Angeles, CA',
@@ -22,6 +24,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 3,
           employer_id: 3,
           job_title: 'Store Stocking',
           location: 'Los Angeles, CA',
@@ -30,6 +33,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 4,
           employer_id: 1,
           job_title: 'Junior UI Developer',
           location: 'Los Angeles, CA',
@@ -38,6 +42,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 5,
           employer_id: 1,
           job_title: 'Senior Back End Developer',
           location: 'Los Angeles, CA',
@@ -46,6 +51,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 6,
           employer_id: 2,
           job_title: 'Customer Service Representative',
           location: 'Seattle, WA',
@@ -54,6 +60,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 7,
           employer_id: 3,
           job_title: 'Warehouse Manager',
           location: 'San Francisco, CA',
@@ -62,6 +69,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 8,
           employer_id: 2,
           job_title: 'Floor Manager',
           location: 'Houston, TX',
@@ -70,6 +78,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 9,
           employer_id: 3,
           job_title: 'Truck Driver',
           location: 'Miami, FL',
@@ -78,6 +87,7 @@ exports.seed = function (knex, Promise) {
           seen: false
         },
         {
+          id: 10,
           employer_id: 1,
           job_title: 'Senior Front End Developer',
           location: 'Los Angeles, CA',
