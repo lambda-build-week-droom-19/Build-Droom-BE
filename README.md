@@ -30,13 +30,7 @@ GET | `/profile/employer` | authorization(token) and id(user) | Returns employer
 POST | `/profile/employer` | authorization(token) and id(user) | Adds and returns employer's profile | { seeker_id: integer(references seeker id), first_name: string, last_name: string, location: string, bio: string, past_experience: string, interests: string, niche: integer(references niche id) }
 GET | `/profile/seekers` | authorization(token) | Returns all seeker profiles | none
 GET | `/profile/seeker` | authorization(token) and id(user) | Returns seeker's profile | none
-POST | `/profile/seeker` | authorization(token) and id(user) | Adds and returns seeker's profile |  ```{ 
-     employer_id: integer(references employer id), 
-     job_title: string, 
-     location: string, 
-     requirements: string, 
-     niche: integer(references niche id) 
-     } ```
+POST | `/profile/seeker` | authorization(token) and id(user) | Adds and returns seeker's profile | { employer_id: integer(references employer id), job_title: string, location: string, requirements: string, niche: integer(references niche id) }
 
 ### Niches
 Method | Endpoint | Headers | Description
