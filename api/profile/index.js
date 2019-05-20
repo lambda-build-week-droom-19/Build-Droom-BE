@@ -26,15 +26,15 @@ router.get('/:db', auth, async (req, res) => {
                     seen: getSeeker.seen === 1 ? true : false
                 })
                 break
-            case 'employers':
+            case 'jobs':
                 db = 'jobs'
                 const getJobs = await Profiles.find(db)
 
                 res.status(200).json(getJobs)
                 break
-            case 'employer':
+            case 'job':
                 db = 'jobs'
-                const getEmployer = await Profiles.findEmp(id)
+                const getEmployer = await Profiles.find('jobs', id)
 
                 res.status(200).json({
                     ...getEmployer,

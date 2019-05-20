@@ -7,7 +7,7 @@ module.exports = {
         const query = db(`${database}`)
 
         return id ?
-            query.where({ id }).select('id', 'username').first()
+            query.where({ id }).first()
             :
             (database === 'employer' || database === 'seeker') ?
                 query.select('id', 'username')
@@ -43,7 +43,7 @@ module.exports = {
     },
 
     findEmp: (employer_id) => {
-        return db('jobs').where({ employer_id }).first()
+        return db('jobs').where({ employer_id })
     },
 
     seek: (seeker_id) => {
