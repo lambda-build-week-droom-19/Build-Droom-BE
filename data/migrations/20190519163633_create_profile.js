@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
             .unique()
             .notNullable()
             .references('id')
-            .inTable('seeker')
+            .inTable('users')
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
 

@@ -17,6 +17,15 @@ router.get('/:db', auth, async (req, res) => {
 
                 res.status(200).json(getSeekers)
                 break
+            case 'seeker':
+                db = 'profile'
+                const getSeeker = await Profiles.seek(id)
+
+                res.status(200).json({
+                    ...getSeeker,
+                    seen: getSeeker.seen === 1 ? true : false
+                })
+                break
             case 'employers':
                 db = 'jobs'
                 const getJobs = await Profiles.find(db)
@@ -30,15 +39,6 @@ router.get('/:db', auth, async (req, res) => {
                 res.status(200).json({
                     ...getEmployer,
                     seen: getEmployer.seen === 1 ? true : false
-                })
-                break
-            case 'seeker':
-                db = 'profile'
-                const getSeeker = await Profiles.seek(id)
-
-                res.status(200).json({
-                    ...getSeeker,
-                    seen: getSeeker.seen === 1 ? true : false
                 })
                 break
             default:

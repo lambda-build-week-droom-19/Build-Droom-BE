@@ -1,6 +1,6 @@
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('employer', col => {
+    return knex.schema.createTable('users', col => {
 
         col.increments()
 
@@ -14,9 +14,13 @@ exports.up = function (knex, Promise) {
             .notNullable()
             .unique()
 
+        col
+            .integer('user_type')
+            .notNullable()
+
     })
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTableIfExists('employer')
+    return knex.schema.dropTableIfExists('users')
 };
