@@ -109,4 +109,33 @@ router.get('/seekers/:niche_id', auth, async (req, res) => {
 
 })
 
+router.put('/', auth, async (req, res) => {
+
+    const { body } = req
+
+    const { id } = req.headers
+
+    if (body.niche) {
+
+        try {
+
+            const edit = await Niches.update('niches', id, body)
+
+            res.status(200).json(edit)
+
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
+
+    }
+
+})
+
 module.exports = router

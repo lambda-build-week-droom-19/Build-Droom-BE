@@ -3,15 +3,13 @@ const Users = require('../../data/actions');
 
 const auth = require('../auth/auth-middleware/auth')
 
-router.get('/:db', auth, async (req, res) => {
-
-    const { db } = req.params
+router.get('/', auth, async (req, res) => {
 
     const { id } = req.headers
 
     try {
 
-        const get = await Users.find(db, id)
+        const get = await Users.find('users', id)
 
         res.status(200).json(get)
 
@@ -28,13 +26,13 @@ router.get('/:db', auth, async (req, res) => {
 
 })
 
-router.get('/:db/:id', auth, async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
 
-    const { db, id } = req.params
+    const { id } = req.params
 
     try {
 
-        const getId = await Users.find(db, id)
+        const getId = await Users.find('users', id)
 
         res.status(200).json(getId)
 

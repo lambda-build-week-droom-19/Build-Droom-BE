@@ -7,14 +7,8 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
  ### Registration
  Method | Endpoint | Description 
  ------ | -------- | -----------
- POST | `/auth/seeker/register` | accepts `username` and `password`, creates a user on the `seekers` table, and returns the job seeker's username and id
- POST | `/auth/employer/register` | accepts `username` and `password`, creates a user on the `employer` table, and returns the employer's username and id
-
- ### Login
- Method | Endpoint | Description 
- ------ | -------- | -----------
- POST | `/auth/seeker/login` | accepts `username` and `password` and returns a message and a token if username and passwords match
- POST | `/auth/employer/login` | accepts `username` and `password` and returns a message and a token if username and passwords match
+ POST | `/auth/register` | accepts `username`, `password`, and `user_type(0 for employer, 1 for seeker)`, creates a user on the `users` table, and returns the user's username and id
+ POST | `/auth/login` | accepts `username` and `password` and returns a message, id, user_type, and a token if username and passwords match
 
 ### Users
 Method | Endpoint | Headers | Description

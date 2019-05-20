@@ -4,23 +4,22 @@ const bcrypt = require('bcryptjs')
 const makeToken = require('./auth-middleware/makeToken')
 const Users = require('../../data/actions')
 
-router.post('/:db/register', async (req, res) => {
-
-    const { db } = req.params
+router.post('/register', async (req, res) => {
 
     const { body } = req
 
-    if (body && body.username && body.password) {
+    if (body && body.username && body.password && body.user_type) {
 
         body.password = bcrypt.hashSync(body.password, 10)
 
         try {
 
-            const post = await Users.add(db, body)
+            const post = await Users.add('users', body)
 
             res.status(200).json({
                 username: body.username,
-                id: post[0]
+                id: post[0],
+                user_type: body.user_type
             })
 
         } catch (err) {
@@ -37,7 +36,7 @@ router.post('/:db/register', async (req, res) => {
     } else {
 
         res.status(404).json({
-            error: 'You must include a username AND a password in your request.'
+            error: 'You must include a username, a password, and a user_type in your request.'
         })
 
     }
@@ -45,15 +44,13 @@ router.post('/:db/register', async (req, res) => {
 
 })
 
-router.post('/:db/login', async (req, res) => {
-
-    const { db } = req.params
+router.post('/login', async (req, res) => {
 
     let { username, password } = req.body
 
     try {
 
-        const user = await Users.findByUsername(db, username)
+        const user = await Users.findByUsername('users', username)
 
         if (user && bcrypt.compareSync(password, user.password)) {
 
@@ -62,6 +59,7 @@ router.post('/:db/login', async (req, res) => {
             res.status(200).json({
                 message: `Welcome, ${username}!`,
                 id: user.id,
+                user_type: user.user_type,
                 token
             })
 
