@@ -21,3 +21,11 @@ Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
 GET | `/users/seeker` | authorization(token) and id(user) | Returns seeker's username and id
 GET | `/users/employer` | authorization(token) and id(user) | Returns employer's username and id
+
+### Profile
+Method | Endpoint | Headers | Description
+------ | -------- | ------- | -----------
+GET | `/profile/employers` | authorization(token) | Returns all employer profiles
+GET | `/profile/employer` | authorization(token) and id(user) | Returns employer's profile
+GET | `/profile/seekers` | authorization(token) | Returns all seeker profiles
+GET | `/profile/seeker` | authorization(token) and id(user) | Returns seeker's profile

@@ -6,8 +6,10 @@ module.exports = {
 
         const query = db(`${database}`)
 
-        return id &&
+        return id ?
             query.where({ id }).select('id', 'username').first()
+            :
+            query
 
     },
 
@@ -35,6 +37,14 @@ module.exports = {
 
     findByUsername: (database, username) => {
         return db(`${database}`).where({ username }).first()
+    },
+
+    findEmp: (employer_id) => {
+        return db('jobs').where({ employer_id }).first()
+    },
+
+    seek: (seeker_id) => {
+        return db('profile').where({ seeker_id }).first()
     }
 
 }
