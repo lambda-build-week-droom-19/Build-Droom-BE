@@ -13,7 +13,8 @@ exports.seed = function (knex, Promise) {
           bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam consectetur a lacus et iaculis. Duis pretium dictum diam in rutrum.',
           past_experience: 'Senior Developer at Lambda School',
           interests: 'Javascript',
-          niche: 1
+          niche: 1,
+          seen: false
         },
         {
           seeker_id: 2,
@@ -23,7 +24,8 @@ exports.seed = function (knex, Promise) {
           bio: 'Proin ante urna, pharetra vitae egestas vel, posuere elementum mi. Quisque nec egestas felis. In laoreet blandit turpis, eu fermentum massa porta a.',
           past_experience: '',
           interests: '',
-          niche: 2
+          niche: 2,
+          seen: false
         },
         {
           seeker_id: 3,
@@ -33,7 +35,8 @@ exports.seed = function (knex, Promise) {
           bio: 'Fusce rutrum blandit mattis. Aliquam sapien neque, faucibus a nibh eu, cursus tincidunt risus. Quisque efficitur nec dui et tristique. Etiam pretium in velit vel dictum. Aenean pulvinar purus ut maximus viverra.',
           past_experience: '',
           interests: '',
-          niche: 3
+          niche: 3,
+          seen: false
         },
       ]);
     });
