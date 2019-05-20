@@ -13,10 +13,10 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
  ### Login
  Method | Endpoint | Description 
  ------ | -------- | -----------
- POST | `/auth/seeker/login` | accepts `username` and `password` and returns a message and a token if username and passwords match (on `seekers` table)
- POST | `/auth/employer/login` | accepts `username` and `password` and returns a message and a token if username and passwords match (on `employer` table)
+ POST | `/auth/seeker/login` | accepts `username` and `password` and returns a message and a token if username and passwords match
+ POST | `/auth/employer/login` | accepts `username` and `password` and returns a message and a token if username and passwords match
 
-### User
+### Users
 Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
 GET | `/users/seeker` | authorization(token) and id(user) | Returns seeker's username and id
