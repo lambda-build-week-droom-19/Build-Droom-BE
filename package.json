@@ -1,0 +1,29 @@
+{
+  "name": "Build-Droom-BE",
+  "version": "1.0.0",
+  "description": "Backend for Droom Web App",
+  "main": "index.js",
+  "repository": "https://github.com/lambda-build-week-droom-19/Build-Droom-BE.git",
+  "author": "lambda-build-week-droom-19",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "server": "cross-env DB_ENV=development nodemon index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.17.0-next3",
+    "morgan": "^1.9.1",
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
