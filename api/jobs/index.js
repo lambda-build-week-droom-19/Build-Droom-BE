@@ -6,7 +6,7 @@ router.get('/', auth, async (req, res) => {
 
     try {
 
-        const getJobs = await Profiles.find('jobs')
+        const getJobs = await Jobs.find('jobs')
 
         res.status(200).json(getJobs)
 
@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 
     try {
 
-        const getJobs = await Profiles.find('jobs', id)
+        const getJobs = await Jobs.find('jobs', id)
 
         res.status(200).json(getJobs)
 
@@ -48,13 +48,20 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
 
-    const { body } = req
+    let { body } = req
 
-    if (body.name) {
+    if (body.user_id) {
+
+        body = {
+            ...body,
+            seen: false
+        }
 
         try {
 
-            const newJob = await Jobs.add('emprofiles', body)
+            const addJob = await Jobs.add('jobs', body)
+
+            const newJob = await Jobs.find('jobs', addJob[0])
 
             res.status(200).json(newJob)
 

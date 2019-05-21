@@ -10,7 +10,7 @@ exports.up = function (knex, Promise) {
             .notNullable()
 
         col
-            .integer('employer_id')
+            .integer('user_id')
             .notNullable()
             .references('id')
             .inTable('users')

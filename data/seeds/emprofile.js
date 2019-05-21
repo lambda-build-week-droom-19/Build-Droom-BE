@@ -7,7 +7,7 @@ exports.seed = function (knex, Promise) {
       return knex('emprofiles').insert([
         {
           id: 1,
-          employer_id: 1,
+          user_id: 1,
           name: 'Lambda School',
           about: 'We are the people that make the learning happen for code stuff',
           contact_info: JSON.stringify({

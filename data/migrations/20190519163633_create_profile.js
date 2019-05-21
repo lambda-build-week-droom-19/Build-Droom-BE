@@ -5,7 +5,7 @@ exports.up = function (knex, Promise) {
         col.increments()
 
         col
-            .integer('seeker_id')
+            .integer('user_id')
             .notNullable()
             .unique()
             .references('id')

@@ -7,6 +7,7 @@ const login = require('./auth')
 const users = require('./users')
 const profile = require('./profile')
 const niches = require('./niches')
+const jobs = require('./jobs')
 
 const server = express()
 
@@ -22,5 +23,7 @@ server.use('/users', users)
 server.use('/profile', profile)
 
 server.use('/niches', niches)
+
+server.use('/jobs', jobs)
 
 module.exports = server
