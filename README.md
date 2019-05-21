@@ -23,10 +23,12 @@ GET | `/profile/jobs` | authorization(token) | Returns all employer profiles | n
 GET | `/profile/job` | authorization(token) and id(user) | Returns employer's profile | none
 POST | `/profile/job` | authorization(token) and id(user) | Adds and returns employer's profile | { **employer_id**: integer(references seeker id), **first_name**: string, **last_name**: string, **location**: string, **bio**: string, **past_experience**: string, **interests**: string, **niche**: integer(references niche id), **seen**: boolean, **timestamp**: string }
 PUT | `/profile/seeker` | authorization(token) and id | Returns updated profile | updates
+DELETE | `/profile/job` | authorization(token) and id(to be deleted) | Returns a message, indicating whether or not the delete succeeded | none
 GET | `/profile/seekers` | authorization(token) | Returns all seeker profiles | none
 GET | `/profile/seeker` | authorization(token) and id(user) | Returns seeker's profile | none
 POST | `/profile/seeker` | authorization(token) and id(user) | Adds and returns seeker's profile | { **seeker_id**: integer(references employer id), **job_title**: string, **location**: string, **requirements**: string, **niche**: integer(references niche id), **seen**: boolean }
 PUT | `/profile/job` | authorization(token) and id | Returns updated job | updates
+DELETE | `/profile/seeker` | authorization(token) and id(to be deleted) | Returns a message, indicating whether or not the delete succeeded | none
 
 ### Niches
 Method | Endpoint | Headers | Description
