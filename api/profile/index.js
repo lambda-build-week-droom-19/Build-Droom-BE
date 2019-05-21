@@ -26,15 +26,9 @@ router.get('/:db', auth, async (req, res) => {
                     seen: getSeeker.seen === 1 ? true : false
                 })
                 break
-            case 'jobs':
-                db = 'jobs'
-                const getJobs = await Profiles.find(db)
-
-                res.status(200).json(getJobs)
-                break
-            case 'job':
-                db = 'jobs'
-                const getEmployer = await Profiles.find('jobs', id)
+            case 'employer':
+                db = 'emprofiles'
+                const getEmployer = await Profiles.find(db, id)
 
                 res.status(200).json({
                     ...getEmployer,
@@ -83,7 +77,7 @@ router.post('/:db', auth, async (req, res) => {
                 res.status(200).json(addProfile)
                 break
             case 'employer':
-                db = 'jobs'
+                db = 'emprofiles'
                 body['employer_id'] = id
 
                 const addJob = await Profiles.add(db, body)
@@ -126,7 +120,7 @@ router.put('/:db', auth, async (req, res) => {
                 res.status(200).json(updateSeeker)
                 break
             case 'job':
-                const updateJob = await Profiles.update('jobs', id, body)
+                const updateJob = await Profiles.update('emprofiles', id, body)
 
                 res.status(200).json(updateJob)
                 break
@@ -157,7 +151,7 @@ router.delete('/:db', auth, async (req, res) => {
 
     try {
 
-        db = db === 'job' ? 'jobs' : 'profile'
+        db = db === 'employer' ? 'emprofile' : 'profile'
 
         const del = await Profiles.remove(db, id)
 
