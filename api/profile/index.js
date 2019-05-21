@@ -149,4 +149,34 @@ router.put('/:db', auth, async (req, res) => {
 
 })
 
+router.delete('/:db', auth, async (req, res) => {
+
+    let { db } = req.params
+
+    const { id } = req.headers
+
+    try {
+
+        db = db === 'job' ? 'jobs' : 'profile'
+
+        const del = await Profiles.remove(db, id)
+
+        del ?
+            res.status(200).json({ message: 'Has been deleted.' })
+            :
+            res.status(404).json({ error: 'Does not exist.' })
+
+    } catch (err) {
+
+        console.log(err)
+
+        res.status(500).json({
+            error: 'Internal Server Error',
+            err
+        })
+
+    }
+
+})
+
 module.exports = router
