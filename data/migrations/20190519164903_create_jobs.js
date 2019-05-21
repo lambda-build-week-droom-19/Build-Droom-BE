@@ -12,21 +12,14 @@ exports.up = function (knex, Promise) {
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
 
-        col
-            .string('job_title')
-            .notNullable()
+        col.string('job_title')
 
-        col
-            .string('location')
-            .notNullable()
+        col.string('location')
 
-        col
-            .text('requirements')
-            .notNullable()
+        col.text('requirements')
 
         col
             .integer('niche')
-            .notNullable()
             .references('id')
             .inTable('niches')
             .onUpdate('CASCADE')

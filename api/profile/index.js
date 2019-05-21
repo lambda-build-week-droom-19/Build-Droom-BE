@@ -87,22 +87,32 @@ router.post('/:db', auth, async (req, res) => {
                 body = {
                     ...body,
                     seeker_id: id,
-                    past_experience: past_experience && JSON.parse(past_experience),
-                    interests: interests && JSON.parse(interests),
+                    past_experience: past_experience && JSON.stringify(past_experience),
+                    interests: interests && JSON.stringify(interests),
                     seen: seen === 1
                 }
 
-                const addProfile = await Profiles.add(db, body)
+                await Profiles.add(db, body)
 
-                res.status(200).json(addProfile)
+                const profile = await Profiles.seek(id)
+
+                res.status(200).json(profile)
                 break
             case 'employer':
                 db = 'emprofiles'
-                body['employer_id'] = id
+                const { contact_info, social_media } = body
+                body = {
+                    ...body,
+                    employer_id: id,
+                    contact_info: contact_info && JSON.stringify(contact_info),
+                    social_media: social_media && JSON.stringify(social_media)
+                }
 
-                const addJob = await Profiles.add(db, body)
+                await Profiles.add(db, body)
 
-                res.status(200).json(addJob)
+                const emp = await Profiles.findEmp(id)
+
+                res.status(200).json(emp)
                 break
             default:
                 res.status(400).json({
@@ -129,17 +139,33 @@ router.put('/:db', auth, async (req, res) => {
 
     const { id } = req.headers
 
-    const { body } = req
+    let { body } = req
 
     try {
 
         switch (db) {
             case 'seeker':
-                const updateSeeker = await Profiles.update('profile', id, body)
+                const { past_experience, interests, seen } = body
+                body = {
+                    ...body,
+                    seeker_id: id,
+                    past_experience: past_experience && JSON.stringify(past_experience),
+                    interests: interests && JSON.stringify(interests),
+                    seen: seen === 1
+                }
 
-                res.status(200).json(updateSeeker)
+                const updatedSeeker = await Profiles.update('profile', id, body)
+
+                res.status(200).json(updatedSeeker)
                 break
-            case 'job':
+            case 'employer':
+                const { contact_info, social_media } = body
+                body = {
+                    ...body,
+                    employer_id: id,
+                    contact_info: contact_info && JSON.stringify(contact_info),
+                    social_media: social_media && JSON.stringify(social_media)
+                }
                 const updateJob = await Profiles.update('emprofiles', id, body)
 
                 res.status(200).json(updateJob)
