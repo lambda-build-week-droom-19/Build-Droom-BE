@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
 
             if (err.errno === 19) {
 
-                res.status(404).json({
+                res.status(400).json({
                     error: `The username '${body.username}' is already taken. Please try again with a different username.`
                 })
 
