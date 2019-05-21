@@ -27,7 +27,7 @@ router.get('/:db', auth, async (req, res) => {
                 break
             case 'seeker':
                 db = 'profile'
-                const getSeeker = await Profiles.seek(id)
+                const getSeeker = await Profiles.seek(db, id)
 
                 res.status(200).json({
                     ...getSeeker,
@@ -36,11 +36,23 @@ router.get('/:db', auth, async (req, res) => {
                     seen: getSeeker.seen === 1
                 })
                 break
+            case 'employers':
+                db = 'emprofiles'
+                const getEmployers = await Profiles.find(db)
+
+                const emps = getEmployers.map(emp => {
+                    return {
+                        ...emp,
+                        contact_info: emp.contact_info && JSON.parse(emp.contact_info),
+                        social_media: emp.social_media && JSON.parse(emp.social_media)
+                    }
+                })
+
+                res.status(200).json(emps)
+                break
             case 'employer':
                 db = 'emprofiles'
-                const getEmployer = await Profiles.findEmp(id)
-
-                console.log(getEmployer)
+                const getEmployer = await Profiles.seek('emprofiles', id)
 
                 res.status(200).json({
                     ...getEmployer,
@@ -94,7 +106,7 @@ router.post('/:db', auth, async (req, res) => {
 
                 await Profiles.add(db, body)
 
-                const profile = await Profiles.seek(id)
+                const profile = await Profiles.seek(db, id)
 
                 res.status(200).json(profile)
                 break
@@ -110,7 +122,7 @@ router.post('/:db', auth, async (req, res) => {
 
                 await Profiles.add(db, body)
 
-                const emp = await Profiles.findEmp(id)
+                const emp = await Profiles.seek(db, id)
 
                 res.status(200).json(emp)
                 break

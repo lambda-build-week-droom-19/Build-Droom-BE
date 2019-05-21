@@ -47,8 +47,8 @@ module.exports = {
         return db(`${database}`).where({ username }).first()
     },
 
-    seek: (user_id) => {
-        return db('profile').where({ user_id }).first()
+    seek: (database, user_id) => {
+        return db(`${database}`).where({ user_id }).first()
     },
 
     findEmpWithNiche: (id) => {
