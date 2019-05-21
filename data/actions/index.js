@@ -61,7 +61,7 @@ module.exports = {
     },
 
     findEmp: (employer_id) => {
-        return db('jobs').where({ employer_id })
+        return db('emprofiles').where({ employer_id }).first()
     },
 
     seek: (seeker_id) => {
