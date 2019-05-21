@@ -16,10 +16,13 @@ router.post('/register', async (req, res) => {
 
             const post = await Users.add('users', body)
 
+            const token = makeToken(body)
+
             res.status(200).json({
                 username: body.username,
                 id: post[0],
-                user_type: body.user_type
+                user_type: body.user_type,
+                token
             })
 
         } catch (err) {
