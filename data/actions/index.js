@@ -22,43 +22,16 @@ module.exports = {
 
     },
 
-    update: async (database, id, changes) => {
+    update: async (database, user_id, changes) => {
 
-        switch (database) {
-            case 'profile':
+        await db(`${database}`)
+            .where({ user_id })
+            .first()
+            .update(changes)
 
-                await db(`${database}`)
-                    .where({ seeker_id: id })
-                    .first()
-                    .update(changes)
-
-                return db(`${database}`)
-                    .where({ seeker_id: id })
-                    .first()
-
-            case 'emprofiles':
-
-                await db(`${database}`)
-                    .where({ employer_id: id })
-                    .first()
-                    .update(changes)
-
-                return db(`${database}`)
-                    .where({ employer_id: id })
-                    .first()
-
-            default:
-
-                await db(`${database}`)
-                    .where({ id })
-                    .first()
-                    .update(changes)
-
-                return db(`${database}`)
-                    .where({ id })
-                    .first()
-
-        }
+        return db(`${database}`)
+            .where({ user_id })
+            .first()
 
     },
 
@@ -74,12 +47,8 @@ module.exports = {
         return db(`${database}`).where({ username }).first()
     },
 
-    findEmp: (employer_id) => {
-        return db('emprofiles').where({ employer_id }).first()
-    },
-
-    seek: (seeker_id) => {
-        return db('profile').where({ seeker_id }).first()
+    seek: (user_id) => {
+        return db('profile').where({ user_id }).first()
     },
 
     findEmpWithNiche: (id) => {

@@ -7,8 +7,8 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
  ### Register/Login
  Method | Endpoint | Description 
  ------ | -------- | -----------
- POST | `/auth/register` | accepts `username`, `password`, and `user_type(0 for employer, 1 for seeker)`, creates a user on the `users` table, and returns the user's username, id, user_type, and token
- POST | `/auth/login` | accepts `username` and `password` and returns a message, id, user_type, and a token if username and passwords match
+ POST | `/auth/register` | accepts `username`, `password`, and `user_type(0 for employer, 1 for seeker)`, creates a user on the `users` table, and returns the user's username, user_id, user_type, and token
+ POST | `/auth/login` | accepts `username` and `password` and returns a message, user_id, user_type, and a token if username and passwords match
 
  #### Register/Login Schema
  ```
@@ -39,7 +39,7 @@ DELETE | `/profile/employer` | authorization(token) and id(to be deleted) | Retu
 ```
 {
     id: integer,
-    employer_id: integer(references employer id)
+    user_id: integer(references employer id)
     name: string [required],
     about: string,
     contact_info: {phone number, email},
@@ -60,7 +60,7 @@ DELETE | `/profile/seeker` | authorization(token) and id(to be deleted) | Return
 ##### Seeker Profile Schema
 ```
 {
-    seeker_id: integer(references seeker id), 
+    user_id: integer(references seeker id), 
     first_name: string [required], 
     last_name: string [required], 
     location: string, 
@@ -99,12 +99,13 @@ PUT | `/niches/seekers/:niche_id` | authorization(token) | Returns all seekers w
 Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
 GET | `/jobs` | none | Returns a list of jobs
-GET | `/job` | id | Returns a list of niches
+GET | `/jobs/:id` | none | Returns job with id
+POST | `/jobs` | authorization(token) | returns created job
 
 #### Job Schema
 ```
 { 
-    employer_id: integer(references employer id), 
+    user_id: integer(references employer id), 
     job_title: string, 
     location: string, 
     requirements: string, 

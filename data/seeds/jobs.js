@@ -7,7 +7,7 @@ exports.seed = function (knex, Promise) {
       return knex('jobs').insert([
         {
           id: 1,
-          employer_id: 1,
+          user_id: 1,
           job_title: 'Junior Front-End Developer',
           location: 'Los Angeles, CA',
           requirements: 'React, Redux, CSS',
@@ -16,7 +16,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 2,
-          employer_id: 2,
+          user_id: 2,
           job_title: 'Bookseller',
           location: 'Los Angeles, CA',
           requirements: 'Sales, Customer Service',
@@ -25,7 +25,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 3,
-          employer_id: 3,
+          user_id: 3,
           job_title: 'Store Stocking',
           location: 'Los Angeles, CA',
           requirements: 'Organization',
@@ -34,7 +34,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 4,
-          employer_id: 1,
+          user_id: 1,
           job_title: 'Junior UI Developer',
           location: 'Los Angeles, CA',
           requirements: 'HTML, CSS',
@@ -43,7 +43,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 5,
-          employer_id: 1,
+          user_id: 1,
           job_title: 'Senior Back End Developer',
           location: 'Los Angeles, CA',
           requirements: 'node',
@@ -52,7 +52,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 6,
-          employer_id: 2,
+          user_id: 2,
           job_title: 'Customer Service Representative',
           location: 'Seattle, WA',
           requirements: 'node',
@@ -61,7 +61,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 7,
-          employer_id: 3,
+          user_id: 3,
           job_title: 'Warehouse Manager',
           location: 'San Francisco, CA',
           requirements: '2+ years Mangaement Experience',
@@ -70,7 +70,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 8,
-          employer_id: 2,
+          user_id: 2,
           job_title: 'Floor Manager',
           location: 'Houston, TX',
           requirements: '5+ years experience in field',
@@ -79,7 +79,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 9,
-          employer_id: 3,
+          user_id: 3,
           job_title: 'Truck Driver',
           location: 'Miami, FL',
           requirements: 'CDL',
@@ -88,7 +88,7 @@ exports.seed = function (knex, Promise) {
         },
         {
           id: 10,
-          employer_id: 1,
+          user_id: 1,
           job_title: 'Senior Front End Developer',
           location: 'Los Angeles, CA',
           requirements: 'node',
