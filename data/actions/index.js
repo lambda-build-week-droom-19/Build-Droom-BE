@@ -24,27 +24,41 @@ module.exports = {
 
     update: async (database, id, changes) => {
 
-        if (database === 'profile') {
+        switch (database) {
+            case 'profile':
 
-            await db(`${database}`)
-                .where({ seeker_id: id })
-                .first()
-                .update(changes)
+                await db(`${database}`)
+                    .where({ seeker_id: id })
+                    .first()
+                    .update(changes)
 
-            return db(`${database}`)
-                .where({ seeker_id: id })
-                .first()
+                return db(`${database}`)
+                    .where({ seeker_id: id })
+                    .first()
+
+            case 'emprofiles':
+
+                await db(`${database}`)
+                    .where({ employer_id: id })
+                    .first()
+                    .update(changes)
+
+                return db(`${database}`)
+                    .where({ employer_id: id })
+                    .first()
+
+            default:
+
+                await db(`${database}`)
+                    .where({ id })
+                    .first()
+                    .update(changes)
+
+                return db(`${database}`)
+                    .where({ id })
+                    .first()
 
         }
-
-        await db(`${database}`)
-            .where({ id })
-            .first()
-            .update(changes)
-
-        return db(`${database}`)
-            .where({ id })
-            .first()
 
     },
 

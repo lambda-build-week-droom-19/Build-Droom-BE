@@ -40,7 +40,7 @@ DELETE | `/profile/employer` | authorization(token) and id(to be deleted) | Retu
 {
     id: integer,
     employer_id: integer(references employer id)
-    name: string,
+    name: string [required],
     about: string,
     contact_info: {phone number, email},
     social_media: {object of social media},
@@ -61,8 +61,8 @@ DELETE | `/profile/seeker` | authorization(token) and id(to be deleted) | Return
 ```
 {
     seeker_id: integer(references seeker id), 
-    first_name: string, 
-    last_name: string, 
+    first_name: string [required], 
+    last_name: string [required], 
     location: string, 
     bio: string, 
     past_experience: [ array of:
