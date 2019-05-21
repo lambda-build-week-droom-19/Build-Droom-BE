@@ -7,7 +7,7 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
  ### Register/Login
  Method | Endpoint | Description 
  ------ | -------- | -----------
- POST | `/auth/register` | accepts `username`, `password`, and `user_type(0 for employer, 1 for seeker)`, creates a user on the `users` table, and returns the user's username and id
+ POST | `/auth/register` | accepts `username`, `password`, and `user_type(0 for employer, 1 for seeker)`, creates a user on the `users` table, and returns the user's username, id, user_type, and token
  POST | `/auth/login` | accepts `username` and `password` and returns a message, id, user_type, and a token if username and passwords match
 
 ### Users
@@ -16,7 +16,7 @@ Method | Endpoint | Headers | Description
 GET | `/users` | authorization(token) and id(user) | Returns all users' username and id
 GET | `/users/:id` | authorization(token) and id(user) | Returns user's username and id
 
-### Profile
+### Profiles
 Method | Endpoint | Headers | Description | Schema
 ------ | -------- | ------- | ----------- | ------
 GET | `/profile/jobs` | authorization(token) | Returns all employer profiles | none
