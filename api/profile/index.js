@@ -40,6 +40,8 @@ router.get('/:db', auth, async (req, res) => {
                 db = 'emprofiles'
                 const getEmployer = await Profiles.findEmp(id)
 
+                console.log(getEmployer)
+
                 res.status(200).json({
                     ...getEmployer,
                     contact_info: JSON.parse(getEmployer.contact_info),
