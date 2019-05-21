@@ -15,7 +15,15 @@ router.get('/:db', auth, async (req, res) => {
                 db = 'profile'
                 const getSeekers = await Profiles.find(db)
 
-                res.status(200).json(getSeekers)
+                res.status(200).json(getSeekers.map(seeker => {
+                    const { past_experience, interests, seen } = seeker
+                    return {
+                        ...seeker,
+                        past_experience: JSON.parse(past_experience),
+                        interests: JSON.parse(interests),
+                        seen: seen === 1
+                    }
+                }))
                 break
             case 'seeker':
                 db = 'profile'
@@ -23,16 +31,19 @@ router.get('/:db', auth, async (req, res) => {
 
                 res.status(200).json({
                     ...getSeeker,
-                    seen: getSeeker.seen === 1 ? true : false
+                    past_experience: JSON.parse(getSeeker.past_experience),
+                    interests: JSON.parse(getSeeker.interests),
+                    seen: getSeeker.seen === 1
                 })
                 break
             case 'employer':
                 db = 'emprofiles'
-                const getEmployer = await Profiles.find(db, id)
+                const getEmployer = await Profiles.findEmp(id)
 
                 res.status(200).json({
                     ...getEmployer,
-                    seen: getEmployer.seen === 1 ? true : false
+                    contact_info: JSON.parse(getEmployer.contact_info),
+                    social_media: JSON.parse(getEmployer.social_media)
                 })
                 break
             default:
@@ -58,7 +69,7 @@ router.get('/:db', auth, async (req, res) => {
 
 router.post('/:db', auth, async (req, res) => {
 
-    const { body } = req
+    let { body } = req
 
     let { db } = req.params
 
@@ -70,7 +81,14 @@ router.post('/:db', auth, async (req, res) => {
 
             case 'seeker':
                 db = 'profile'
-                body['seeker_id'] = id
+                const { past_experience, interests, seen } = body
+                body = {
+                    ...body,
+                    seeker_id: id,
+                    past_experience: past_experience && JSON.parse(past_experience),
+                    interests: interests && JSON.parse(interests),
+                    seen: seen === 1
+                }
 
                 const addProfile = await Profiles.add(db, body)
 
@@ -86,7 +104,7 @@ router.post('/:db', auth, async (req, res) => {
                 break
             default:
                 res.status(400).json({
-                    error: `/profiles/${db} is not a valid endpoint. Please try again.`
+                    error: `Cannot POST /profiles/${db}. Please try again.`
                 })
         }
 

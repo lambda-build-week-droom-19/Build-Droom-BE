@@ -42,8 +42,8 @@ DELETE | `/profile/employer` | authorization(token) and id(to be deleted) | Retu
     employer_id: integer(references employer id)
     name: string,
     about: string,
-    contact_info: string,
-    social_media: string,
+    contact_info: {phone number, email},
+    social_media: {object of social media},
     website: string
 }
 ```
@@ -65,8 +65,14 @@ DELETE | `/profile/seeker` | authorization(token) and id(to be deleted) | Return
     last_name: string, 
     location: string, 
     bio: string, 
-    past_experience: string, 
-    interests: string, 
+    past_experience: [ array of:
+        {
+            name: string,
+            title: string,
+            description: string
+        }
+    ], 
+    interests: [array of interests], 
     niche: integer(references niche id), 
     seen: boolean, 
     timestamp: string 
@@ -81,6 +87,14 @@ POST | `/niches` | authorization(token) | Adds niche and returns `{id, niche}`
 GET | `/niches/employers/:niche_id` | authorization(token) | Returns all employers with niche
 PUT | `/niches/seekers/:niche_id` | authorization(token) | Returns all seekers with niche
 
+#### Niche Schema
+```
+{
+    id: integer,
+    niche: string
+}
+```
+
 ### Jobs
 Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
@@ -91,7 +105,7 @@ GET | `/job` | id | Returns a list of niches
 ```
 { 
     employer_id: integer(references employer id), 
-    _title: string, 
+    job_title: string, 
     location: string, 
     requirements: string, 
     niche: integer(references niche id), 

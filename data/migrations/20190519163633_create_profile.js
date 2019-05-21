@@ -6,8 +6,8 @@ exports.up = function (knex, Promise) {
 
         col
             .integer('seeker_id')
-            .unique()
             .notNullable()
+            .unique()
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')
@@ -21,13 +21,9 @@ exports.up = function (knex, Promise) {
             .string('last_name')
             .notNullable()
 
-        col
-            .string('location')
-            .notNullable()
+        col.string('location')
 
-        col
-            .text('bio')
-            .notNullable()
+        col.text('bio')
 
         col.text('past_experience')
 
@@ -35,7 +31,6 @@ exports.up = function (knex, Promise) {
 
         col
             .integer('niche')
-            .notNullable()
             .references('id')
             .inTable('niches')
             .onUpdate('CASCADE')
