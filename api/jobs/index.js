@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const auth = require('../auth/auth-middleware/auth')
 const Jobs = require('../../data/actions')
-// const Users = require(../users/index.js);
+const getMatches = require('./middleware')
 router.get('/', async (req, res) => {
 
     try {
@@ -67,30 +67,32 @@ router.get('/:id', async (req, res) => {
 })
 
 //////////////////
-// router.get('/:id/company-matches', async (req, res) => {
+router.get('/:company_id/company-matches', async (req, res) => {
 
-//     const { id } = req.params
+    const { company_id } = req.params
 
-//     try {
+    try {
 
-//         const getJobs = await Jobs.find('jobs', id)
+        const jobList = await Jobs.findCompanyJobs(company_id)
 
-//          const getUsers = await Users.find
+        const matchList = jobList.map(async job => {
+            return await getMatches(job.id)
+        })
 
-//         res.status(200).json(getUsers)
+        res.status(200).json(matchList)
 
-//     } catch (err) {
+    } catch (err) {
 
-//         console.log(err)
+        console.log(err)
 
-//         res.status(500).json({
-//             ...getJobs,
-//             requirements: JSON.parse(getJobs.requirements),
-//             seen: body.seen === 1
-//         })
+        res.status(500).json({
+            ...getJob,
+            requirements: JSON.parse(getJob.requirements),
+            seen: body.seen === 1
+        })
 
-//     }
-// })
+    }
+})
 //////////////////
 
 router.post('/', auth, async (req, res) => {
