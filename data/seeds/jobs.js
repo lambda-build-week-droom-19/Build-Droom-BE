@@ -14,6 +14,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilites: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },

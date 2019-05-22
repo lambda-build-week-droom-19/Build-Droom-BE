@@ -1,5 +1,23 @@
 const db = require('..')
 
+// const Users = require(this folder)
+
+// try {
+
+//     const arrayOfUserIds = [1,2,3]
+
+//     let users = await Users.find('profile')
+
+//     users = users.filter(user => {
+//         if (arrayOfUserIds.filter(id => id === user.user_id)) {
+//             return user
+//         }
+//     })
+
+//     res.status(200).json(users)
+
+// }
+
 module.exports = {
 
     find: (database, id) => {
@@ -9,10 +27,7 @@ module.exports = {
         return id ?
             query.where({ id }).first()
             :
-            (database === 'employer' || database === 'seeker') ?
-                query.select('id', 'username')
-                :
-                query
+            query
 
     },
 
@@ -68,5 +83,9 @@ module.exports = {
             }
         })
     },
+
+    findCompanyJobs: (user_id) => {
+        return db('jobs').where({ user_id })
+    }
 
 }

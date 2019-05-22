@@ -6,7 +6,7 @@ router.get('/:db', auth, async (req, res) => {
 
     let { db } = req.params
 
-    const { id } = req.headers
+    const { id, user_type } = req.decoded
 
     try {
 
@@ -16,11 +16,17 @@ router.get('/:db', auth, async (req, res) => {
                 const getSeekers = await Profiles.find(db)
 
                 res.status(200).json(getSeekers.map(seeker => {
-                    const { past_experience, interests, seen } = seeker
+                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = seeker
                     return {
                         ...seeker,
-                        past_experience: JSON.parse(past_experience),
-                        interests: JSON.parse(interests),
+                        contact_info: contact_info && JSON.parse(contact_info),
+                        interests: interests && JSON.parse(interests),
+                        education: education && JSON.parse(education),
+                        skills: skills && JSON.parse(skills),
+                        references: references && JSON.parse(references),
+                        social_media: social_media && JSON.parse(social_media),
+                        projects: projects && JSON.parse(projects),
+                        past_experience: past_experience && JSON.parse(past_experience),
                         seen: seen === 1
                     }
                 }))
@@ -31,8 +37,14 @@ router.get('/:db', auth, async (req, res) => {
 
                 res.status(200).json({
                     ...getSeeker,
-                    past_experience: JSON.parse(getSeeker.past_experience),
-                    interests: JSON.parse(getSeeker.interests),
+                    contact_info: getSeeker.contact_info && JSON.parse(getSeeker.contact_info),
+                    interests: getSeeker.interests && JSON.parse(getSeeker.interests),
+                    past_experience: getSeeker.past_experience && JSON.parse(getSeeker.past_experience),
+                    education: getSeeker.education && JSON.parse(getSeeker.education),
+                    skills: getSeeker.skills && JSON.parse(getSeeker.skills),
+                    references: getSeeker.references && JSON.parse(getSeeker.references),
+                    social_media: getSeeker.social_media && JSON.parse(getSeeker.social_media),
+                    projects: getSeeker.projects && JSON.parse(getSeeker.projects),
                     seen: getSeeker.seen === 1
                 })
                 break
@@ -97,12 +109,17 @@ router.post('/:db', auth, async (req, res) => {
                 if (user_type === 0) {
 
                     db = 'profile'
-                    const { past_experience, interests, seen } = body
+                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = body
                     body = {
                         ...body,
-                        user_id: id,
-                        past_experience: past_experience && JSON.stringify(past_experience),
+                        contact_info: contact_info && JSON.stringify(contact_info),
                         interests: interests && JSON.stringify(interests),
+                        past_experience: past_experience && JSON.stringify(past_experience),
+                        education: education && JSON.stringify(education),
+                        skills: skills && JSON.stringify(skills),
+                        references: references && JSON.stringify(references),
+                        social_media: social_media && JSON.stringify(social_media),
+                        projects: projects && JSON.stringify(projects),
                         seen: seen === 1
                     }
 
@@ -181,12 +198,17 @@ router.put('/:db', auth, async (req, res) => {
 
             switch (db) {
                 case 'seeker':
-                    const { past_experience, interests, seen } = body
+                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = body
                     body = {
                         ...body,
-                        user_id: id,
-                        past_experience: past_experience && JSON.stringify(past_experience),
+                        contact_info: contact_info && JSON.stringify(contact_info),
                         interests: interests && JSON.stringify(interests),
+                        past_experience: past_experience && JSON.stringify(past_experience),
+                        education: education && JSON.stringify(education),
+                        skills: skills && JSON.stringify(skills),
+                        references: references && JSON.stringify(references),
+                        social_media: social_media && JSON.stringify(social_media),
+                        projects: projects && JSON.stringify(projects),
                         seen: seen === 1
                     }
 
@@ -201,12 +223,11 @@ router.put('/:db', auth, async (req, res) => {
                     })
                     break
                 case 'employer':
-                    const { contact_info, social_media } = body
                     body = {
                         ...body,
                         user_id: id,
-                        contact_info: contact_info && JSON.stringify(contact_info),
-                        social_media: social_media && JSON.stringify(social_media)
+                        contact_info: body.contact_info && JSON.stringify(body.contact_info),
+                        social_media: body.social_media && JSON.stringify(body.social_media)
                     }
                     const updateJob = await Profiles.update('emprofiles', id, body)
 
@@ -272,6 +293,12 @@ router.delete('/:db', auth, async (req, res) => {
             })
 
         }
+
+    } else {
+
+        res.status(401).json({
+            error: 'You are not authorized to delete this profile.'
+        })
 
     }
 
