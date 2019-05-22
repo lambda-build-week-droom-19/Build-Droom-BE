@@ -8,71 +8,164 @@ exports.seed = function (knex, Promise) {
         {
           id: 1,
           user_id: 4,
-          first_name: 'John',
-          last_name: 'Doe',
-          location: 'Los Angeles, CA',
-          bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam consectetur a lacus et iaculis. Duis pretium dictum diam in rutrum.',
+          first_name: 'first_name',
+          last_name: 'last_name',
+          position: 'position',
+          location: 'location',
+          bio: 'bio',
+          job_type: 'job_type',
+          contact_info: JSON.stringify({
+            phone_number: 'phone_number',
+            email: 'email'
+          }),
+          interests: JSON.stringify(['array', 'of', 'interests']),
           past_experience: JSON.stringify([
             {
-              name: 'somewhere',
-              title: 'something',
-              description: 'ja;lsdfjpoiarwnppaoierngoiadpsfhpafnbpashdpfa jsdpaiosdn iouasdpias bdfoiuahsdpfo apiduhvpaijgn oaiugfher'
-            },
-            {
-              name: 'bartender',
-              title: 'somebody',
-              description: 'a;lskdjfnpoiaerngpoahejfpo apoigj paosidhfjnpoa sidhfpoiaw jpfohoi'
+              name: 'name',
+              title: 'title',
+              description: 'description'
             }
           ]),
-          interests: JSON.stringify(['Javascript', 'CSS']),
+          education: JSON.stringify([
+            {
+              school: 'school',
+              certificate: 'certificate'
+            },
+            {
+              school: 'school',
+              certificate: 'certificate'
+            }
+          ]),
+          skills: JSON.stringify(['skill', 'skill', 'skill']),
+          references: JSON.stringify([
+            {
+              name: 'name',
+              relationship: 'relationship',
+              phone: 'phone',
+              email: 'email'
+            }
+          ]),
+          social_media: JSON.stringify({
+            facebook: 'https://facebook.com',
+            instagram: 'https://instagram.com'
+          }),
+          portfolio: 'portfolio',
+          resume: 'resume',
+          projects: JSON.stringify([
+            'https://google.com',
+            'https://facebook.com'
+          ]),
           niche: 1,
-          seen: false
+          seen: false,
+          timestamp: 'timestamp'
         },
         {
           id: 2,
           user_id: 5,
-          first_name: 'Jane',
-          last_name: 'Doe',
-          location: 'Houston, TX',
-          bio: 'Proin ante urna, pharetra vitae egestas vel, posuere elementum mi. Quisque nec egestas felis. In laoreet blandit turpis, eu fermentum massa porta a.',
+          first_name: 'first_name',
+          last_name: 'last_name',
+          position: 'position',
+          location: 'location',
+          bio: 'bio',
+          job_type: 'job_type',
+          contact_info: JSON.stringify({
+            phone_number: 'phone_number',
+            email: 'email'
+          }),
+          interests: JSON.stringify(['array', 'of', 'interests']),
           past_experience: JSON.stringify([
             {
-              name: 'somewhere',
-              title: 'something',
-              description: 'ja;lsdfjpoiarwnppaoierngoiadpsfhpafnbpashdpfa jsdpaiosdn iouasdpias bdfoiuahsdpfo apiduhvpaijgn oaiugfher'
-            },
-            {
-              name: 'bartender',
-              title: 'somebody',
-              description: 'a;lskdjfnpoiaerngpoahejfpo apoigj paosidhfjnpoa sidhfpoiaw jpfohoi'
+              name: 'name',
+              title: 'title',
+              description: 'description'
             }
           ]),
-          interests: JSON.stringify(['Javascript', 'CSS']),
-          niche: 2,
-          seen: false
+          education: JSON.stringify([
+            {
+              school: 'school',
+              certificate: 'certificate'
+            },
+            {
+              school: 'school',
+              certificate: 'certificate'
+            }
+          ]),
+          skills: JSON.stringify(['skill', 'skill', 'skill']),
+          references: JSON.stringify([
+            {
+              name: 'name',
+              relationship: 'relationship',
+              phone: 'phone',
+              email: 'email'
+            }
+          ]),
+          social_media: JSON.stringify({
+            facebook: 'https://facebook.com',
+            instagram: 'https://instagram.com'
+          }),
+          portfolio: 'portfolio',
+          resume: 'resume',
+          projects: JSON.stringify([
+            'https://google.com',
+            'https://facebook.com'
+          ]),
+          niche: 1,
+          seen: false,
+          timestamp: 'timestamp'
         },
         {
           id: 3,
           user_id: 6,
-          first_name: 'Tyler',
-          last_name: 'Farmer',
-          location: 'New York City, NY',
-          bio: 'Fusce rutrum blandit mattis. Aliquam sapien neque, faucibus a nibh eu, cursus tincidunt risus. Quisque efficitur nec dui et tristique. Etiam pretium in velit vel dictum. Aenean pulvinar purus ut maximus viverra.',
+          first_name: 'first_name',
+          last_name: 'last_name',
+          position: 'position',
+          location: 'location',
+          bio: 'bio',
+          job_type: 'job_type',
+          contact_info: JSON.stringify({
+            phone_number: 'phone_number',
+            email: 'email'
+          }),
+          interests: JSON.stringify(['array', 'of', 'interests']),
           past_experience: JSON.stringify([
             {
-              name: 'somewhere',
-              title: 'something',
-              description: 'ja;lsdfjpoiarwnppaoierngoiadpsfhpafnbpashdpfa jsdpaiosdn iouasdpias bdfoiuahsdpfo apiduhvpaijgn oaiugfher'
-            },
-            {
-              name: 'bartender',
-              title: 'somebody',
-              description: 'a;lskdjfnpoiaerngpoahejfpo apoigj paosidhfjnpoa sidhfpoiaw jpfohoi'
+              name: 'name',
+              title: 'title',
+              description: 'description'
             }
           ]),
-          interests: JSON.stringify(['Javascript', 'CSS']),
-          niche: 3,
-          seen: false
+          education: JSON.stringify([
+            {
+              school: 'school',
+              certificate: 'certificate'
+            },
+            {
+              school: 'school',
+              certificate: 'certificate'
+            }
+          ]),
+          skills: JSON.stringify(['skill', 'skill', 'skill']),
+          references: JSON.stringify([
+            {
+              name: 'name',
+              relationship: 'relationship',
+              phone: 'phone',
+              email: 'email'
+            }
+          ]),
+          social_media: JSON.stringify({
+            facebook: 'https://facebook.com',
+            instagram: 'https://instagram.com'
+          }),
+          portfolio: 'portfolio',
+          resume: 'resume',
+          projects: JSON.stringify([
+            'https://google.com',
+            'https://facebook.com'
+          ]),
+          niche: 1,
+          seen: false,
+          timestamp: 'timestamp'
         },
       ]);
     });

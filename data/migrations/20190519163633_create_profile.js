@@ -13,21 +13,37 @@ exports.up = function (knex, Promise) {
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
 
-        col
-            .string('first_name')
-            .notNullable()
+        col.string('first_name')
 
-        col
-            .string('last_name')
-            .notNullable()
+        col.string('last_name')
+
+        col.string('position')
 
         col.string('location')
 
         col.text('bio')
 
-        col.text('past_experience')
+        col.string('job_type')
+
+        col.string('contact_info')
 
         col.string('interests')
+
+        col.text('past_experience')
+
+        col.string('education')
+
+        col.string('skills')
+
+        col.string('references')
+
+        col.string('social_media')
+
+        col.string('portfolio')
+
+        col.string('resume')
+
+        col.string('projects')
 
         col
             .integer('niche')
@@ -39,6 +55,8 @@ exports.up = function (knex, Promise) {
         col
             .boolean('seen')
             .notNullable()
+
+        col.string('timestamp')
 
     })
 };

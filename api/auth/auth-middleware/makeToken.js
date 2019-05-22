@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken')
 module.exports = user => {
 
     const payload = {
-        subject: user.id,
-        username: user.username
+        id: user.id,
+        username: user.username,
+        user_type: user.user_type
     }
 
     const options = {
