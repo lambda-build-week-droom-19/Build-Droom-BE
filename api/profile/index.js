@@ -87,44 +87,64 @@ router.post('/:db', auth, async (req, res) => {
 
     let { db } = req.params
 
-    const { id } = req.headers
+    const { id, user_type } = req.decoded
 
     try {
 
         switch (db) {
 
             case 'seeker':
-                db = 'profile'
-                const { past_experience, interests, seen } = body
-                body = {
-                    ...body,
-                    seeker_id: id,
-                    past_experience: past_experience && JSON.stringify(past_experience),
-                    interests: interests && JSON.stringify(interests),
-                    seen: seen === 1
+                if (user_type === 0) {
+
+                    db = 'profile'
+                    const { past_experience, interests, seen } = body
+                    body = {
+                        ...body,
+                        user_id: id,
+                        past_experience: past_experience && JSON.stringify(past_experience),
+                        interests: interests && JSON.stringify(interests),
+                        seen: seen === 1
+                    }
+
+                    await Profiles.add(db, body)
+
+                    const profile = await Profiles.seek(db, id)
+
+                    res.status(200).json(profile)
+
+                } else {
+
+                    res.status(401).json({
+                        error: 'You are not a job seeker'
+                    })
+
                 }
-
-                await Profiles.add(db, body)
-
-                const profile = await Profiles.seek(db, id)
-
-                res.status(200).json(profile)
                 break
             case 'employer':
-                db = 'emprofiles'
-                const { contact_info, social_media } = body
-                body = {
-                    ...body,
-                    employer_id: id,
-                    contact_info: contact_info && JSON.stringify(contact_info),
-                    social_media: social_media && JSON.stringify(social_media)
+                if (user_type === 1) {
+
+                    db = 'emprofiles'
+                    const { contact_info, social_media } = body
+                    body = {
+                        ...body,
+                        user_id: id,
+                        contact_info: contact_info && JSON.stringify(contact_info),
+                        social_media: social_media && JSON.stringify(social_media)
+                    }
+
+                    await Profiles.add(db, body)
+
+                    const emp = await Profiles.seek(db, id)
+
+                    res.status(200).json(emp)
+
+                } else {
+
+                    res.status(401).json({
+                        error: 'You are not an employer.'
+                    })
+
                 }
-
-                await Profiles.add(db, body)
-
-                const emp = await Profiles.seek(db, id)
-
-                res.status(200).json(emp)
                 break
             default:
                 res.status(400).json({
@@ -149,55 +169,77 @@ router.put('/:db', auth, async (req, res) => {
 
     const { db } = req.params
 
-    const { id } = req.headers
+    const id = req.decoded.subject
 
     let { body } = req
 
-    try {
+    console.log(req.decoded.subject, id)
 
-        switch (db) {
-            case 'seeker':
-                const { past_experience, interests, seen } = body
-                body = {
-                    ...body,
-                    seeker_id: id,
-                    past_experience: past_experience && JSON.stringify(past_experience),
-                    interests: interests && JSON.stringify(interests),
-                    seen: seen === 1
-                }
+    if (!id || req.decoded.subject == id) {
 
-                const updatedSeeker = await Profiles.update('profile', id, body)
+        try {
 
-                res.status(200).json(updatedSeeker)
-                break
-            case 'employer':
-                const { contact_info, social_media } = body
-                body = {
-                    ...body,
-                    employer_id: id,
-                    contact_info: contact_info && JSON.stringify(contact_info),
-                    social_media: social_media && JSON.stringify(social_media)
-                }
-                const updateJob = await Profiles.update('emprofiles', id, body)
+            switch (db) {
+                case 'seeker':
+                    const { past_experience, interests, seen } = body
+                    body = {
+                        ...body,
+                        user_id: id,
+                        past_experience: past_experience && JSON.stringify(past_experience),
+                        interests: interests && JSON.stringify(interests),
+                        seen: seen === 1
+                    }
 
-                res.status(200).json(updateJob)
-                break
-            default:
-                res.status(404).json({
-                    error: `/profile/${db} is not a valid endpoint. Please try again.`
-                })
+                    const updatedSeeker = await Profiles.update('profile', id, body)
+
+                    res.status(200).json({
+                        ...updatedSeeker,
+                        user_id: id,
+                        past_experience: updatedSeeker.past_experience && JSON.parse(updatedSeeker.past_experience),
+                        interests: updatedSeeker.interests && JSON.parse(updatedSeeker.interests),
+                        seen: seen === 1
+                    })
+                    break
+                case 'employer':
+                    const { contact_info, social_media } = body
+                    body = {
+                        ...body,
+                        user_id: id,
+                        contact_info: contact_info && JSON.stringify(contact_info),
+                        social_media: social_media && JSON.stringify(social_media)
+                    }
+                    const updateJob = await Profiles.update('emprofiles', id, body)
+
+                    res.status(200).json({
+                        ...updateJob,
+                        user_id: id,
+                        contact_info: updateJob.contact_info && JSON.parse(updateJob.contact_info),
+                        social_media: updateJob.social_media && JSON.parse(updateJob.social_media)
+                    })
+                    break
+                default:
+                    res.status(404).json({
+                        error: `Cannot PUT /profile/${db}. Please try again.`
+                    })
+            }
+
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
         }
 
-    } catch (err) {
-
-        console.log(err)
-
-        res.status(500).json({
-            error: 'Internal Server Error',
-            err
+    } else {
+        res.status(401).json({
+            error: 'You are not authorized to edit this profile.'
         })
-
     }
+
 
 })
 
@@ -205,29 +247,34 @@ router.delete('/:db', auth, async (req, res) => {
 
     let { db } = req.params
 
-    const { id } = req.headers
+    const id = req.decoded.subject
 
-    try {
+    if (req.decoded.subject == id) {
 
-        db = db === 'employer' ? 'emprofile' : 'profile'
+        try {
 
-        const del = await Profiles.remove(db, id)
+            db = db === 'employer' ? 'emprofiles' : 'profile'
 
-        del ?
-            res.status(200).json({ message: 'Has been deleted.' })
-            :
-            res.status(404).json({ error: 'Does not exist.' })
+            const del = await Profiles.remove(db, id)
 
-    } catch (err) {
+            del ?
+                res.status(200).json({ message: 'Has been deleted.' })
+                :
+                res.status(404).json({ error: 'Does not exist.' })
 
-        console.log(err)
+        } catch (err) {
 
-        res.status(500).json({
-            error: 'Internal Server Error',
-            err
-        })
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
 
     }
+
 
 })
 

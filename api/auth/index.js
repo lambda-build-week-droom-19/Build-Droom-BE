@@ -8,7 +8,7 @@ router.post('/register', async (req, res) => {
 
     const { body } = req
 
-    if (body && body.username && body.password && body.user_type) {
+    if (body && body.username && body.password && body.user_type !== null) {
 
         body.password = bcrypt.hashSync(body.password, 10)
 
@@ -16,7 +16,11 @@ router.post('/register', async (req, res) => {
 
             const post = await Users.add('users', body)
 
-            const token = makeToken(body)
+            const get = await Users.find('users', post[0])
+
+            console.log(get)
+
+            const token = makeToken(get)
 
             res.status(200).json({
                 username: body.username,

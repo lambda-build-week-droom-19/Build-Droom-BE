@@ -14,9 +14,15 @@ exports.up = function (knex, Promise) {
 
         col.string('job_title')
 
-        col.string('location')
+        col.boolean('pay_type')
 
-        col.text('requirements')
+        col.string('starting_pay')
+
+        col.string('description')
+
+        col.string('responsibilites')
+
+        col.string('required_skills')
 
         col
             .integer('niche')
@@ -32,6 +38,21 @@ exports.up = function (knex, Promise) {
         col
             .timestamp('timestamp')
             .unique()
+
+        col
+            .string('appliers')
+            .references('id')
+            .inTable('users')
+            .onUpdate('CASCADE')
+            .onDelete('RESTRICT')
+
+
+        col
+            .string('confirmed')
+            .references('id')
+            .inTable('users')
+            .onUpdate('CASCADE')
+            .onDelete('RESTRICT')
 
     })
 };
