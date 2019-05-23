@@ -46,8 +46,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
@@ -56,7 +58,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
         {
@@ -100,8 +102,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
@@ -110,7 +114,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
         {
@@ -154,8 +158,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
@@ -164,7 +170,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
       ]);
