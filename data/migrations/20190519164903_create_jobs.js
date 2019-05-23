@@ -14,13 +14,15 @@ exports.up = function (knex, Promise) {
 
         col.string('job_title')
 
+        col.string('location')
+
         col.boolean('pay_type')
 
         col.string('starting_pay')
 
         col.string('description')
 
-        col.string('responsibilites')
+        col.string('responsibilities')
 
         col.string('required_skills')
 

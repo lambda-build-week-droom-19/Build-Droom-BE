@@ -2,6 +2,11 @@ const router = require('express').Router()
 const auth = require('../auth/auth-middleware/auth')
 const Profiles = require('../../data/actions')
 
+const parseSeeker = require('./middleware/index').parseSeeker
+const parseEmployer = require('./middleware').parseEmployer
+const stringifySeeker = require('./middleware').stringifySeeker
+const stringifyEmployer = require('./middleware').stringifyEmployer
+
 router.get('/:db', auth, async (req, res) => {
 
     let { db } = req.params
@@ -15,50 +20,19 @@ router.get('/:db', auth, async (req, res) => {
                 db = 'profile'
                 const getSeekers = await Profiles.find(db)
 
-                res.status(200).json(getSeekers.map(seeker => {
-                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = seeker
-                    return {
-                        ...seeker,
-                        contact_info: contact_info && JSON.parse(contact_info),
-                        interests: interests && JSON.parse(interests),
-                        education: education && JSON.parse(education),
-                        skills: skills && JSON.parse(skills),
-                        references: references && JSON.parse(references),
-                        social_media: social_media && JSON.parse(social_media),
-                        projects: projects && JSON.parse(projects),
-                        past_experience: past_experience && JSON.parse(past_experience),
-                        seen: seen === 1
-                    }
-                }))
+                res.status(200).json(getSeekers.map(seeker => parseSeeker(seeker)))
                 break
             case 'seeker':
                 db = 'profile'
                 const getSeeker = await Profiles.seek(db, id)
 
-                res.status(200).json({
-                    ...getSeeker,
-                    contact_info: getSeeker.contact_info && JSON.parse(getSeeker.contact_info),
-                    interests: getSeeker.interests && JSON.parse(getSeeker.interests),
-                    past_experience: getSeeker.past_experience && JSON.parse(getSeeker.past_experience),
-                    education: getSeeker.education && JSON.parse(getSeeker.education),
-                    skills: getSeeker.skills && JSON.parse(getSeeker.skills),
-                    references: getSeeker.references && JSON.parse(getSeeker.references),
-                    social_media: getSeeker.social_media && JSON.parse(getSeeker.social_media),
-                    projects: getSeeker.projects && JSON.parse(getSeeker.projects),
-                    seen: getSeeker.seen === 1
-                })
+                res.status(200).json(parseSeeker(getSeeker))
                 break
             case 'employers':
                 db = 'emprofiles'
                 const getEmployers = await Profiles.find(db)
 
-                const emps = getEmployers.map(emp => {
-                    return {
-                        ...emp,
-                        contact_info: emp.contact_info && JSON.parse(emp.contact_info),
-                        social_media: emp.social_media && JSON.parse(emp.social_media)
-                    }
-                })
+                const emps = getEmployers.map(emp => parseEmployer(emp))
 
                 res.status(200).json(emps)
                 break
@@ -66,11 +40,7 @@ router.get('/:db', auth, async (req, res) => {
                 db = 'emprofiles'
                 const getEmployer = await Profiles.seek('emprofiles', id)
 
-                res.status(200).json({
-                    ...getEmployer,
-                    contact_info: JSON.parse(getEmployer.contact_info),
-                    social_media: JSON.parse(getEmployer.social_media)
-                })
+                res.status(200).json(parseEmployer(getEmployer))
                 break
             default:
                 res.status(400).json({
@@ -101,6 +71,8 @@ router.post('/:db', auth, async (req, res) => {
 
     const { id, user_type } = req.decoded
 
+    console.log(id)
+
     try {
 
         switch (db) {
@@ -109,21 +81,8 @@ router.post('/:db', auth, async (req, res) => {
                 if (user_type === 0) {
 
                     db = 'profile'
-                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = body
-                    body = {
-                        ...body,
-                        contact_info: contact_info && JSON.stringify(contact_info),
-                        interests: interests && JSON.stringify(interests),
-                        past_experience: past_experience && JSON.stringify(past_experience),
-                        education: education && JSON.stringify(education),
-                        skills: skills && JSON.stringify(skills),
-                        references: references && JSON.stringify(references),
-                        social_media: social_media && JSON.stringify(social_media),
-                        projects: projects && JSON.stringify(projects),
-                        seen: seen === 1
-                    }
 
-                    await Profiles.add(db, body)
+                    await Profiles.add(db, stringifySeeker(body, id))
 
                     const profile = await Profiles.seek(db, id)
 
@@ -141,19 +100,12 @@ router.post('/:db', auth, async (req, res) => {
                 if (user_type === 1) {
 
                     db = 'emprofiles'
-                    const { contact_info, social_media } = body
-                    body = {
-                        ...body,
-                        user_id: id,
-                        contact_info: contact_info && JSON.stringify(contact_info),
-                        social_media: social_media && JSON.stringify(social_media)
-                    }
 
-                    await Profiles.add(db, body)
+                    await Profiles.add(db, stringifyEmployer(body, id))
 
                     const emp = await Profiles.seek(db, id)
 
-                    res.status(200).json(emp)
+                    res.status(200).json(parseEmployer(emp))
 
                 } else {
 
@@ -196,50 +148,15 @@ router.put('/:db', auth, async (req, res) => {
 
             switch (db) {
                 case 'seeker':
-                    const { contact_info, interests, past_experience, education, skills, references, social_media, projects, seen } = body
-                    body = {
-                        ...body,
-                        contact_info: contact_info && JSON.stringify(contact_info),
-                        interests: interests && JSON.stringify(interests),
-                        past_experience: past_experience && JSON.stringify(past_experience),
-                        education: education && JSON.stringify(education),
-                        skills: skills && JSON.stringify(skills),
-                        references: references && JSON.stringify(references),
-                        social_media: social_media && JSON.stringify(social_media),
-                        projects: projects && JSON.stringify(projects),
-                        seen: seen === 1
-                    }
 
-                    const updatedSeeker = await Profiles.update('profile', id, body)
+                    const updatedSeeker = await Profiles.update('profile', id, stringifySeeker(body))
 
-                    res.status(200).json({
-                        ...updatedSeeker,
-                        contact_info: updatedSeeker.contact_info && JSON.parse(updatedSeeker.contact_info),
-                        interests: updatedSeeker.interests && JSON.parse(updatedSeeker.interests),
-                        past_experience: updatedSeeker.past_experience && JSON.parse(updatedSeeker.past_experience),
-                        education: updatedSeeker.education && JSON.parse(updatedSeeker.education),
-                        skills: updatedSeeker.skills && JSON.parse(updatedSeeker.skills),
-                        references: updatedSeeker.references && JSON.parse(updatedSeeker.references),
-                        social_media: updatedSeeker.social_media && JSON.parse(updatedSeeker.social_media),
-                        projects: updatedSeeker.projects && JSON.parse(updatedSeeker.projects),
-                        seen: updatedSeeker.seen === 1
-                    })
+                    res.status(200).json(parseSeeker(updatedSeeker))
                     break
                 case 'employer':
-                    body = {
-                        ...body,
-                        user_id: id,
-                        contact_info: body.contact_info && JSON.stringify(body.contact_info),
-                        social_media: body.social_media && JSON.stringify(body.social_media)
-                    }
-                    const updateJob = await Profiles.update('emprofiles', id, body)
+                    const updateJob = await Profiles.update('emprofiles', id, stringifyEmployer(body))
 
-                    res.status(200).json({
-                        ...updateJob,
-                        user_id: id,
-                        contact_info: updateJob.contact_info && JSON.parse(updateJob.contact_info),
-                        social_media: updateJob.social_media && JSON.parse(updateJob.social_media)
-                    })
+                    res.status(200).json(parseEmployer(updateJob))
                     break
                 default:
                     res.status(404).json({
@@ -271,9 +188,11 @@ router.delete('/:db', auth, async (req, res) => {
 
     let { db } = req.params
 
-    const id = req.decoded.subject
+    const { id } = req.decoded
 
-    if (req.decoded.subject == id) {
+    console.log(id)
+
+    if (id) {
 
         try {
 

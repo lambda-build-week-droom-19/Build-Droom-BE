@@ -50,6 +50,19 @@ module.exports = {
 
     },
 
+    updateJob: async (id, changes) => {
+
+        await db('jobs')
+            .where({ id })
+            .first()
+            .update(changes)
+
+        return db('jobs')
+            .where({ id })
+            .first()
+
+    },
+
     remove: (database, id) => {
 
         return db(`${database}`)
