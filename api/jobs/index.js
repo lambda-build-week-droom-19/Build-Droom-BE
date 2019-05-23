@@ -106,7 +106,18 @@ router.get('/employer/:id', async (req, res) => {
 
     try {
 
-        const getEmployerJobs = await Jobs.findCompanyJobs(id)
+        let getEmployerJobs = await Jobs.findCompanyJobs(id)
+
+        getEmployerJobs = getEmployerJobs.map(gej => {
+            return {
+                ...gej,
+                responsibilites: gej.responsibilites && JSON.parse(gej.responsibilites),
+                required_skills: gej.required_skills && JSON.parse(gej.required_skills),
+                appliers: gej.appliers && JSON.parse(gej.appliers),
+                confirmed: gej.confirmed && JSON.parse(gej.confirmed),
+                seen: gej.seen === 1
+            }
+        })
 
         res.status(200).json(getEmployerJobs)
 
