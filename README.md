@@ -46,7 +46,12 @@ DELETE | `/profile/employer` | authorization(token) | Returns a message, indicat
         phone: string,
         email: string
     },
-    social_media: {object of social media},
+    social_media: {
+        facebook: string,
+        linkedIn: string,
+        twitter: string,
+        github: string
+    },
     website: string
 }
 ```
@@ -96,7 +101,12 @@ DELETE | `/profile/seeker` | authorization(token) | Returns a message, indicatin
             email: string
         }
     ],
-    social_media: {object of social media},
+    social_media: {
+        facebook: string,
+        linkedIn: string,
+        twitter: string,
+        github: string
+    },
     portfolio: string,
     resume: string,
     projects: [array of urls],
@@ -129,8 +139,10 @@ GET | `/jobs` | none | Returns a list of jobs
 GET | `/jobs/:id` | none | Returns job with id
 POST | `/jobs` | authorization(token) | returns created job
 PUT | `/jobs/:id` | authorization(token) | returns updated job
-DELETE | `/jobs/id` | authorization(token) | returns whether or not the job has been deleted
-GET | `/jobs/:company_id/company-matches` | none | returns list of matches for each job by that employer
+DELETE | `/jobs/:id` | authorization(token) | returns whether or not the job has been deleted
+GET | `/jobs/matches/employer` | authorization(token) | returns list of matches for each job by that employer
+GET | `/jobs/matches/seeker` | returns list of jobs seeker has not seen
+GET | `/jobs/matches/job/:job_id` | returns list of available and confirmed seekers for job_id
 GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
 
 #### Accepted Job Schema
@@ -141,6 +153,7 @@ GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
     job_type: string(part-time, full-time, seasonal),
     pay_type: string, 
     starting_pay: string,
+    education: string,
     description: string,
     responsibilities: [array of responsibilites],
     required_skills: [array of skills],
@@ -151,7 +164,7 @@ GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
 }
 ```
 
-#### Returned Schema for `/jobs/:id/company-matches`
+#### Returned Schema for `/jobs/matches/employer`
 ```
 {
   job: {

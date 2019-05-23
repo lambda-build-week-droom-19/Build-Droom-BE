@@ -1,23 +1,5 @@
 const db = require('..')
 
-// const Users = require(this folder)
-
-// try {
-
-//     const arrayOfUserIds = [1,2,3]
-
-//     let users = await Users.find('profile')
-
-//     users = users.filter(user => {
-//         if (arrayOfUserIds.filter(id => id === user.user_id)) {
-//             return user
-//         }
-//     })
-
-//     res.status(200).json(users)
-
-// }
-
 module.exports = {
 
     find: (database, id) => {

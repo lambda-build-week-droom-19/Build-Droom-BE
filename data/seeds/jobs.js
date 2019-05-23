@@ -14,6 +14,7 @@ exports.seed = function (knex, Promise) {
           location: 'location',
           pay_type: 'pay_type',
           starting_pay: 'starting_pay',
+          education: 'education',
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),

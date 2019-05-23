@@ -52,17 +52,16 @@ router.get('/:id', async (req, res) => {
 })
 
 //////////////////
-router.get('/:company_id/company-matches', auth, async (req, res) => {
 
-    const { company_id } = req.params
+router.get('/matches/employer', auth, async (req, res) => {
 
-    const { id } = req.decoded
+    const { id, user_type } = req.decoded
 
-    if (Number(company_id) === Number(id)) {
+    if (user_type === 0) {
 
         try {
 
-            const jobList = await Jobs.findCompanyJobs(company_id)
+            const jobList = await Jobs.findCompanyJobs(id)
 
             await jobList.map(job => {
                 getMatches(job.id)
@@ -70,7 +69,13 @@ router.get('/:company_id/company-matches', auth, async (req, res) => {
                         res.status(200).json(response)
                     })
                     .catch(err => {
-                        throw new Error(err)
+
+                        console.log(err)
+
+                        res.status(400).json({
+                            error: 'There was a problem receiving jobs for this employer',
+                            err
+                        })
                     })
             })
 
@@ -88,9 +93,105 @@ router.get('/:company_id/company-matches', auth, async (req, res) => {
     } else {
 
         res.status(401).json({
+            error: 'You are not an employer.'
+        })
 
-            error: 'You are not authorized to view these company matches.'
+    }
 
+
+})
+
+router.get('/matches/job/:id', auth, async (req, res) => {
+
+    const { id, user_type } = req.decoded
+
+    const job_id = req.params.id
+
+    if (user_type === 0) {
+
+        try {
+
+            let job = await Jobs.find('jobs', job_id)
+
+            if (job && job.user_id === id) {
+
+                job = parseJob(job)
+
+                getMatches(job.id)
+                    .then(response => {
+                        res.status(200).json(response)
+                    })
+                    .catch(err => {
+                        res.status(500).json(err)
+                    })
+
+            } else {
+                job ?
+                    res.status(401).json({
+                        error: 'You do not own this job.'
+                    })
+                    :
+                    res.status(404).json({
+                        error: 'Job does not exist.'
+                    })
+
+            }
+
+
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
+
+    } else {
+
+        res.status(401).json({
+            error: 'You are not an employer.'
+        })
+
+    }
+
+})
+
+router.get('/matches/seeker', auth, async (req, res) => {
+
+    const { id, user_type } = req.decoded
+
+    if (user_type === 1) {
+
+        try {
+
+            let getSeekerJobs = await Jobs.find('jobs')
+
+            let getSeeker = await Jobs.seek('profile', id)
+
+            const seen = JSON.parse(getSeeker.seen)
+
+            getSeekerJobs = getSeekerJobs.filter(job => !seen.includes(job.id)).map(job => parseJob(job))
+
+            res.status(200).send(getSeekerJobs)
+
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
+
+    } else {
+
+        res.status(500).json({
+            error: 'You are not a job seeker.'
         })
 
     }
@@ -210,16 +311,14 @@ router.delete('/:id', auth, async (req, res) => {
 
     const job = await Jobs.find('jobs', id)
 
-    console.log(req.decoded.id, job.user_id)
-
-    if (req.decoded.id === job.user_id) {
+    if (job && req.decoded.id === job.user_id) {
 
         try {
 
             await Jobs.remove('jobs', id)
 
             res.status(200).json({
-                message: "Has been deleted."
+                message: 'Has been deleted.'
             })
 
         } catch (err) {
@@ -235,9 +334,20 @@ router.delete('/:id', auth, async (req, res) => {
 
     } else {
 
-        res.status(401).json({
-            error: 'You are not authorized to delete this job.'
-        })
+        if (job) {
+
+            res.status(401).json({
+                error: 'You are not authorized to delete this job.'
+            })
+
+        } else {
+
+            res.status(404).json({
+                error: 'Job does not exist.'
+            })
+
+        }
+
 
     }
 

@@ -15,9 +15,12 @@ exports.seed = function (knex, Promise) {
             phone: '1234567890',
             email: 'lambda@lambda.com'
           }),
-          social_media: JSON.stringify([
-            'http://facebook.com/LambdaSchoolOnline'
-          ]),
+          social_media: JSON.stringify({
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
+          }),
           website: 'http://lambdaschool.com'
         },
         {
@@ -30,9 +33,12 @@ exports.seed = function (knex, Promise) {
             phone: '1234567890',
             email: 'lambda@lambda.com'
           }),
-          social_media: JSON.stringify([
-            'http://facebook.com/LambdaSchoolOnline'
-          ]),
+          social_media: JSON.stringify({
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
+          }),
           website: 'http://lambdaschool.com'
         },
         {
@@ -45,9 +51,12 @@ exports.seed = function (knex, Promise) {
             phone: '1234567890',
             email: 'lambda@lambda.com'
           }),
-          social_media: JSON.stringify([
-            'http://facebook.com/LambdaSchoolOnline'
-          ]),
+          social_media: JSON.stringify({
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
+          }),
           website: 'http://lambdaschool.com'
         },
       ])

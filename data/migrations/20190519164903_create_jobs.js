@@ -24,6 +24,8 @@ exports.up = function (knex, Promise) {
 
         col.string('starting_pay')
 
+        col.string('education')
+
         col.string('description')
 
         col.string('responsibilities')

@@ -46,8 +46,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
@@ -100,8 +102,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
@@ -154,8 +158,10 @@ exports.seed = function (knex, Promise) {
             }
           ]),
           social_media: JSON.stringify({
-            facebook: 'https://facebook.com',
-            instagram: 'https://instagram.com'
+            facebook: 'facebook',
+            linkedIn: 'linkedIn',
+            twitter: 'twitter',
+            github: 'github'
           }),
           portfolio: 'portfolio',
           resume: 'resume',
