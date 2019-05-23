@@ -40,6 +40,7 @@ DELETE | `/profile/employer` | authorization(token) | Returns a message, indicat
 ```
 {
     name: string,
+    location: string,
     about: string,
     contact_info: {
         phone_number: string,

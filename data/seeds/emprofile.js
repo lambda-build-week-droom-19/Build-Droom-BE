@@ -10,6 +10,7 @@ exports.seed = function (knex, Promise) {
           user_id: 1,
           name: 'Lambda School',
           about: 'We are the people that make the learning happen for code stuff',
+          location: 'location',
           contact_info: JSON.stringify({
             phone: '1234567890',
             email: 'lambda@lambda.com'
@@ -24,6 +25,7 @@ exports.seed = function (knex, Promise) {
           user_id: 2,
           name: 'Employer Name',
           about: 'We are the people that make the learning happen for code stuff',
+          location: 'location',
           contact_info: JSON.stringify({
             phone: '1234567890',
             email: 'lambda@lambda.com'
@@ -38,6 +40,7 @@ exports.seed = function (knex, Promise) {
           user_id: 3,
           name: 'Company Name',
           about: 'We are the people that make the learning happen for code stuff',
+          location: 'location',
           contact_info: JSON.stringify({
             phone: '1234567890',
             email: 'lambda@lambda.com'
