@@ -127,6 +127,8 @@ Method | Endpoint | Headers | Description
 GET | `/jobs` | none | Returns a list of jobs
 GET | `/jobs/:id` | none | Returns job with id
 POST | `/jobs` | authorization(token) | returns created job
+DELETE | `/jobs/id | authorization(token) | returns whether or not the job has been deleted
+GET | `/jobs/:company_id/company-matches` | returns list of matches for each job by that employer
 
 #### Accepted Job Schema
 ```
