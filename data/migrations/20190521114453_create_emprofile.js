@@ -6,6 +6,8 @@ exports.up = function (knex, Promise) {
 
         col.string('name')
 
+        col.string('location')
+
         col
             .integer('user_id')
             .notNullable()
