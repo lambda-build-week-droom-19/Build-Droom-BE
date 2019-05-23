@@ -141,8 +141,8 @@ POST | `/jobs` | authorization(token) | returns created job
 PUT | `/jobs/:id` | authorization(token) | returns updated job
 DELETE | `/jobs/:id` | authorization(token) | returns whether or not the job has been deleted
 GET | `/jobs/matches/employer` | authorization(token) | returns list of matches for each job by that employer
-GET | `/jobs/matches/seeker` | returns list of jobs seeker has not seen
-GET | `/jobs/matches/job/:job_id` | returns list of available and confirmed seekers for job_id
+GET | `/jobs/matches/seeker` | authorization(token) | returns list of jobs seeker has not seen
+GET | `/jobs/matches/job/:job_id` | authorization(token) | returns list of available and confirmed seekers for job_id
 GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
 
 #### Accepted Job Schema
