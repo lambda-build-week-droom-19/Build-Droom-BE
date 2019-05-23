@@ -56,7 +56,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
         {
@@ -110,7 +110,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
         {
@@ -164,7 +164,7 @@ exports.seed = function (knex, Promise) {
             'https://facebook.com'
           ]),
           niche: 1,
-          seen: false,
+          seen: JSON.stringify([1, 3]),
           timestamp: 'timestamp'
         },
       ]);

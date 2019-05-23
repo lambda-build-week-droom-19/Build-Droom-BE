@@ -101,7 +101,7 @@ DELETE | `/profile/seeker` | authorization(token) | Returns a message, indicatin
     resume: string,
     projects: [array of urls],
     niche: integer(references niche id), 
-    seen: boolean, 
+    seen: [array of job ids that have been seen by user], 
     timestamp: string 
 }
 ```
@@ -137,6 +137,8 @@ GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
 ```
 { 
     job_title: string, 
+    start_date: string,
+    job_type: string(part-time, full-time, seasonal),
     pay_type: string, 
     starting_pay: string,
     description: string,

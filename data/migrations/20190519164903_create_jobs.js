@@ -14,6 +14,10 @@ exports.up = function (knex, Promise) {
 
         col.string('job_title')
 
+        col.string('start_date')
+
+        col.string('job_type')
+
         col.string('location')
 
         col.boolean('pay_type')
@@ -47,7 +51,6 @@ exports.up = function (knex, Promise) {
             .inTable('users')
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
-
 
         col
             .string('confirmed')
