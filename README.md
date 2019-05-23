@@ -35,7 +35,7 @@ GET | `/users/:id` | authorization(token) | Returns user's username and id
 Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
 GET | `/profile/employers` | authorization(token) | Returns all employer profiles
-GET | `/profile/employer` | authorization(token) | Returns employer's profile
+GET | `/profile/employer` | authorization(token) [if seeker, id(referring to employer)] | Returns employer's profile
 POST | `/profile/employer` | authorization(token) | Adds and returns employer's profile
 PUT | `/profile/employer` | authorization(token) | Returns updated employer
 DELETE | `/profile/employer` | authorization(token) | Returns a message, indicating whether or not the delete succeeded
@@ -64,7 +64,7 @@ DELETE | `/profile/employer` | authorization(token) | Returns a message, indicat
 Method | Endpoint | Headers | Description
 ------ | -------- | ------- | -----------
 GET | `/profile/seekers` | authorization(token) | Returns all seeker profiles
-GET | `/profile/seeker` | authorization(token) | Returns seeker's profile
+GET | `/profile/seeker` | authorization(token) [if employer, id(referring to seeker)] | Returns seeker's profile
 POST | `/profile/seeker` | authorization(token) | Adds and returns seeker's profile
 PUT | `/profile/seeker` | authorization(token) | Returns updated profile
 DELETE | `/profile/seeker` | authorization(token) | Returns a message, indicating whether or not the delete succeeded

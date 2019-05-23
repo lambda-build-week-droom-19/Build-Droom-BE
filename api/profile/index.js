@@ -24,6 +24,17 @@ router.get('/:db', auth, async (req, res) => {
                 break
             case 'seeker':
                 db = 'profile'
+
+                if (user_type === 0) {
+
+                    const seeker_id = req.headers.id
+
+                    const getSeeker = await Profiles.seek(db, seeker_id)
+
+                    res.status(200).json(parseSeeker(getSeeker))
+                    break
+                }
+
                 const getSeeker = await Profiles.seek(db, id)
 
                 res.status(200).json(parseSeeker(getSeeker))
@@ -38,6 +49,16 @@ router.get('/:db', auth, async (req, res) => {
                 break
             case 'employer':
                 db = 'emprofiles'
+                if (user_type === 1) {
+
+                    const employer_id = req.headers.id
+
+                    const getEmployer = await Profiles.seek(db, employer_id)
+
+                    res.status(200).json(parseEmployer(getEmployer))
+
+                }
+
                 const getEmployer = await Profiles.seek('emprofiles', id)
 
                 res.status(200).json(parseEmployer(getEmployer))
