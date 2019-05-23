@@ -98,6 +98,31 @@ router.get('/:company_id/company-matches', async (req, res) => {
 
     }
 })
+
+
+router.get('/employer/:id', async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        const getEmployerJobs = await Jobs.findCompanyJobs(id)
+
+        res.status(200).json(getEmployerJobs)
+
+    } catch (err) {
+
+        console.log(err)
+
+        res.status(200).json({
+            error: 'Internal Server Error',
+            err
+        })
+
+    }
+
+})
+
 //////////////////
 
 router.post('/', auth, async (req, res) => {
