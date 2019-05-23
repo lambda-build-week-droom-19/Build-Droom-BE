@@ -2,6 +2,7 @@ const router = require('express').Router()
 const auth = require('../auth/auth-middleware/auth')
 const Jobs = require('../../data/actions')
 const getMatches = require('./middleware')
+
 router.get('/', async (req, res) => {
 
     try {
@@ -75,11 +76,15 @@ router.get('/:company_id/company-matches', async (req, res) => {
 
         const jobList = await Jobs.findCompanyJobs(company_id)
 
-        const matchList = jobList.map(job => job = getMatches(job.id))
-
-        console.log('matchlist', matchList)
-
-        res.status(200).json(matchList)
+        await jobList.map(job => {
+            getMatches(job.id)
+                .then(response => {
+                    res.status(200).json(response)
+                })
+                .catch(err => {
+                    throw new Error(err)
+                })
+        })
 
     } catch (err) {
 
@@ -186,6 +191,45 @@ router.put('/:id', auth, async (req, res) => {
 
         res.status(401).json({
             error: 'You are not authorized to edit this job.'
+        })
+
+    }
+
+})
+
+router.delete('/:id', auth, async (req, res) => {
+
+    const { id } = req.params
+
+    const job = await Jobs.find('jobs', id)
+
+    console.log(req.decoded.id, job.user_id)
+
+    if (req.decoded.id === job.user_id) {
+
+        try {
+
+            await Jobs.remove('jobs', id)
+
+            res.status(200).json({
+                message: "Has been deleted."
+            })
+
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
+
+    } else {
+
+        res.status(401).json({
+            error: 'You are not authorized to delete this job.'
         })
 
     }

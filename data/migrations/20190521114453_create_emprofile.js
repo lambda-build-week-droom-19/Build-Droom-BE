@@ -4,10 +4,7 @@ exports.up = function (knex, Promise) {
 
         col.increments()
 
-        col
-            .string('name')
-            .unique()
-            .notNullable()
+        col.string('name')
 
         col
             .integer('user_id')
