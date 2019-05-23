@@ -43,7 +43,7 @@ DELETE | `/profile/employer` | authorization(token) | Returns a message, indicat
     location: string,
     about: string,
     contact_info: {
-        phone_number: string,
+        phone: string,
         email: string
     },
     social_media: {object of social media},
