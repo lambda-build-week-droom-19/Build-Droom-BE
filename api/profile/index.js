@@ -186,13 +186,11 @@ router.put('/:db', auth, async (req, res) => {
 
     const { db } = req.params
 
-    const id = req.decoded.subject
+    const { id } = req.decoded
 
     let { body } = req
 
-    console.log(req.decoded.subject, id)
-
-    if (!id || req.decoded.subject == id) {
+    if (id) {
 
         try {
 
@@ -216,10 +214,15 @@ router.put('/:db', auth, async (req, res) => {
 
                     res.status(200).json({
                         ...updatedSeeker,
-                        user_id: id,
-                        past_experience: updatedSeeker.past_experience && JSON.parse(updatedSeeker.past_experience),
+                        contact_info: updatedSeeker.contact_info && JSON.parse(updatedSeeker.contact_info),
                         interests: updatedSeeker.interests && JSON.parse(updatedSeeker.interests),
-                        seen: seen === 1
+                        past_experience: updatedSeeker.past_experience && JSON.parse(updatedSeeker.past_experience),
+                        education: updatedSeeker.education && JSON.parse(updatedSeeker.education),
+                        skills: updatedSeeker.skills && JSON.parse(updatedSeeker.skills),
+                        references: updatedSeeker.references && JSON.parse(updatedSeeker.references),
+                        social_media: updatedSeeker.social_media && JSON.parse(updatedSeeker.social_media),
+                        projects: updatedSeeker.projects && JSON.parse(updatedSeeker.projects),
+                        seen: updatedSeeker.seen === 1
                     })
                     break
                 case 'employer':
