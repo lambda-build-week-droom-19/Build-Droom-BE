@@ -1,7 +1,10 @@
 const router = require('express').Router()
 const auth = require('../auth/auth-middleware/auth')
 const Jobs = require('../../data/actions')
-const getMatches = require('./middleware')
+const getMatches = require('./middleware').getMatches
+
+const parseJob = require('./middleware').parseJob
+const stringifyJob = require('./middleware').stringifyJob
 
 router.get('/', async (req, res) => {
 
@@ -9,19 +12,7 @@ router.get('/', async (req, res) => {
 
         let getJobs = await Jobs.find('jobs')
 
-        getJobs = getJobs.map(job => {
-
-            const { responsibilites, required_skills, appliers, confirmed, seen } = job
-
-            return {
-                ...job,
-                responsibilites: responsibilites && JSON.parse(responsibilites),
-                required_skills: required_skills && JSON.parse(required_skills),
-                appliers: appliers && JSON.parse(appliers),
-                confirmed: confirmed && JSON.parse(confirmed),
-                seen: seen === 1
-            }
-        })
+        getJobs = getJobs.map(job => parseJob(job))
 
         res.status(200).json(getJobs)
 
@@ -44,18 +35,11 @@ router.get('/:id', async (req, res) => {
 
     try {
 
-        const getJob = await Jobs.find('jobs', id)
+        let getJob = await Jobs.find('jobs', id)
 
-        const { responsibilites, required_skills, appliers, confirmed, seen } = getJob
+        getJob = parseJob(getJob, id)
 
-        res.status(200).json({
-            ...getJob,
-            responsibilites: responsibilites && JSON.parse(responsibilites),
-            required_skills: required_skills && JSON.parse(required_skills),
-            appliers: appliers && JSON.parse(appliers),
-            confirmed: confirmed && JSON.parse(confirmed),
-            seen: seen === 1
-        })
+        res.status(200).json(getJob)
 
     } catch (err) {
 
@@ -68,35 +52,49 @@ router.get('/:id', async (req, res) => {
 })
 
 //////////////////
-router.get('/:company_id/company-matches', async (req, res) => {
+router.get('/:company_id/company-matches', auth, async (req, res) => {
 
     const { company_id } = req.params
 
-    try {
+    const { id } = req.decoded
 
-        const jobList = await Jobs.findCompanyJobs(company_id)
+    if (Number(company_id) === Number(id)) {
 
-        await jobList.map(job => {
-            getMatches(job.id)
-                .then(response => {
-                    res.status(200).json(response)
-                })
-                .catch(err => {
-                    throw new Error(err)
-                })
-        })
+        try {
 
-    } catch (err) {
+            const jobList = await Jobs.findCompanyJobs(company_id)
 
-        console.log(err)
+            await jobList.map(job => {
+                getMatches(job.id)
+                    .then(response => {
+                        res.status(200).json(response)
+                    })
+                    .catch(err => {
+                        throw new Error(err)
+                    })
+            })
 
-        res.status(500).json({
-            ...getJob,
-            requirements: JSON.parse(getJob.requirements),
-            seen: body.seen === 1
+        } catch (err) {
+
+            console.log(err)
+
+            res.status(500).json({
+                error: 'Internal Server Error',
+                err
+            })
+
+        }
+
+    } else {
+
+        res.status(401).json({
+
+            error: 'You are not authorized to view these company matches.'
+
         })
 
     }
+
 })
 
 
@@ -108,16 +106,7 @@ router.get('/employer/:id', async (req, res) => {
 
         let getEmployerJobs = await Jobs.findCompanyJobs(id)
 
-        getEmployerJobs = getEmployerJobs.map(gej => {
-            return {
-                ...gej,
-                responsibilites: gej.responsibilites && JSON.parse(gej.responsibilites),
-                required_skills: gej.required_skills && JSON.parse(gej.required_skills),
-                appliers: gej.appliers && JSON.parse(gej.appliers),
-                confirmed: gej.confirmed && JSON.parse(gej.confirmed),
-                seen: gej.seen === 1
-            }
-        })
+        getEmployerJobs = getEmployerJobs.map(gej => parseJob(gej))
 
         res.status(200).json(getEmployerJobs)
 
@@ -140,37 +129,19 @@ router.post('/', auth, async (req, res) => {
 
     let { body } = req
 
-    const id = req.decoded.subject
+    let { id } = req.decoded
+
+    id = Number(id)
 
     if (body) {
 
-        const { responsibilites, required_skills, appliers, confirmed, seen } = body
-
-        body = {
-            ...body,
-            responsibilites: responsibilites && JSON.stringify(responsibilites),
-            required_skills: required_skills && JSON.stringify(required_skills),
-            appliers: appliers && JSON.stringify(appliers),
-            confirmed: confirmed && JSON.stringify(confirmed),
-            seen: seen === 1
-        }
-
         try {
 
-            const addJob = await Jobs.add('jobs', body)
+            const addJob = await Jobs.add('jobs', stringifyJob(body, id))
 
             let newJob = await Jobs.find('jobs', addJob[0])
 
-            newJob = {
-                ...newJob,
-                responsibilites: newJob.responsibilites && JSON.parse(newJob.responsibilites),
-                required_skills: newJob.required_skills && JSON.parse(newJob.required_skills),
-                appliers: newJob.appliers && JSON.parse(newJob.appliers),
-                confirmed: newJob.confirmed && JSON.parse(newJob.confirmed),
-                seen: seen === 1
-            }
-
-            res.status(200).json(newJob)
+            res.status(200).json(parseJob(newJob))
 
         } catch (err) {
 
@@ -195,22 +166,22 @@ router.put('/:id', auth, async (req, res) => {
 
     const subject = req.decoded.id
 
-    if (id == subject) {
+    if (Number(id) === Number(subject)) {
 
         try {
 
-            await Jobs.update('jobs', body)
+            const jobby = await Jobs.updateJob(id, stringifyJob(body))
 
-            const updateJob = await Jobs.find('job', id)
+            const updateJob = jobby ?
+                await Jobs.find('jobs', id)
+                :
+                {
+                    error: 'Could not update job.'
+                }
 
-            res.status(200).json({
-                ...updateJob,
-                responsibilites: updateJob.responsibilites && JSON.parse(updateJob.responsibilites),
-                required_skills: updateJob.required_skills && JSON.parse(updateJob.required_skills),
-                appliers: updateJob.appliers && JSON.parse(updateJob.appliers),
-                confirmed: updateJob.confirmed && JSON.parse(updateJob.confirmed),
-                seen: updateJob.seen === 1
-            })
+            console.log('updateJob', updateJob)
+
+            res.status(200).json(parseJob(updateJob))
 
         } catch (err) {
 

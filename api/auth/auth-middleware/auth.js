@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
             if (err) {
                 console.log(err)
-                return res.status(401).json(err)
+                return res.status(401).json({ err })
             }
 
             req.decoded = decoded

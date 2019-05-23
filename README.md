@@ -129,7 +129,7 @@ GET | `/jobs` | none | Returns a list of jobs
 GET | `/jobs/:id` | none | Returns job with id
 POST | `/jobs` | authorization(token) | returns created job
 PUT | `/jobs/:id` | authorization(token) | returns updated job
-DELETE | `/jobs/id | authorization(token) | returns whether or not the job has been deleted
+DELETE | `/jobs/id` | authorization(token) | returns whether or not the job has been deleted
 GET | `/jobs/:company_id/company-matches` | none | returns list of matches for each job by that employer
 GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
 
@@ -146,5 +146,33 @@ GET | `/jobs/employer/:id` | none | returns jobs associated with employer's id
     confirmed: [array of seeker user_ids that are confirmed by employer],
     niche: integer(references niche id), 
     seen: boolean,
+}
+```
+
+#### Returned Schema for `/jobs/:id/company-matches`
+```
+{
+  job: {
+    title: job_title,
+    id: job id
+  },
+  usersAvailable: [ Array of:
+    { User(s) that expressed interest in job
+      user_id: user_id,
+      first_name: user's first_name,
+      last_name: user's last_name,
+      position: user's position,
+      location: user's location
+    }
+  ],
+  usersConfirmed: [ Array of:
+    { User(s) the company has approved
+      user_id: user_id,
+      first_name: user's first_name,
+      last_name: user's last_name,
+      position: user's position,
+      location: user's location
+    }
+  ]
 }
 ```
