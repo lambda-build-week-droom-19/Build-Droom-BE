@@ -75,9 +75,9 @@ router.get('/:company_id/company-matches', async (req, res) => {
 
         const jobList = await Jobs.findCompanyJobs(company_id)
 
-        const matchList = jobList.map(async job => {
-            return await getMatches(job.id)
-        })
+        const matchList = jobList.map(job => job = getMatches(job.id))
+
+        console.log('matchlist', matchList)
 
         res.status(200).json(matchList)
 

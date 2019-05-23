@@ -60,7 +60,7 @@ module.exports = async (id) => {
 
         console.log("jobMatchList", jobMatchList)
 
-        return jobMatchList
+        return Promise.jobMatchList
 
     } catch (err) {
 
