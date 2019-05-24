@@ -97,7 +97,7 @@ router.post('/:db', auth, async (req, res) => {
         switch (db) {
 
             case 'seeker':
-                if (user_type === 0) {
+                if (user_type === 1) {
 
                     db = 'profile'
 
@@ -116,7 +116,7 @@ router.post('/:db', auth, async (req, res) => {
                 }
                 break
             case 'employer':
-                if (user_type === 1) {
+                if (user_type === 0) {
 
                     db = 'emprofiles'
 
@@ -209,9 +209,9 @@ router.delete('/:db', auth, async (req, res) => {
 
     const { id } = req.decoded
 
-    console.log(id)
+    const getProfile = await Profiles.find(db, id)
 
-    if (id) {
+    if (id === getProfile.user_id) {
 
         try {
 
