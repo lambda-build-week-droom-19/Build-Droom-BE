@@ -51,7 +51,7 @@ module.exports = {
                 usersConfirmed: usersConfirmed,
             }
 
-            return Promise.resolve(jobMatchList)
+            return jobMatchList
 
         } catch (err) {
 

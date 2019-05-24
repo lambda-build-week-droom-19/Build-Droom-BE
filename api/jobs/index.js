@@ -63,21 +63,9 @@ router.get('/matches/employer', auth, async (req, res) => {
 
             const jobList = await Jobs.findCompanyJobs(id)
 
-            await jobList.map(job => {
-                getMatches(job.id)
-                    .then(response => {
-                        res.status(200).json(response)
-                    })
-                    .catch(err => {
-
-                        console.log(err)
-
-                        res.status(400).json({
-                            error: 'There was a problem receiving jobs for this employer',
-                            err
-                        })
-                    })
-            })
+            await Promise.all(jobList.map(job => {
+                return getMatches(job.id)
+            })).then(arr => res.status(200).json(arr))
 
         } catch (err) {
 
