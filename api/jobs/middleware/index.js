@@ -45,7 +45,7 @@ module.exports = {
             let jobMatchList = {
                 job: {
                     title: getJob.job_title,
-                    id: getJob.user_id
+                    id: getJob.id
                 },
                 usersAvailable,
                 usersConfirmed,
