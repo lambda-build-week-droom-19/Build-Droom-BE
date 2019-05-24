@@ -6,6 +6,8 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
 
 ### Front End: `https://droom-app.netlify.com/`
 
+# USER_TYPES: Job Seeker is a `1` and Employer is a `0`
+
 ## Endpoints
 
  ### Register/Login
