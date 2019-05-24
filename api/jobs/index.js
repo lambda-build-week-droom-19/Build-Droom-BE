@@ -290,7 +290,7 @@ router.put('/:id', auth, async (req, res) => {
     } else {
 
         body = stringifyJob(body)
-        const upJob = await Jobs.updateJob(id, { appliers: upJob.appliers })
+        const upJob = await Jobs.updateJob(id, { appliers: body.appliers })
         user_type === 1 ?
             upJob ?
                 res.status(200).json(upJob)
