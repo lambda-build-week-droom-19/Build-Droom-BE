@@ -47,8 +47,8 @@ module.exports = {
                     title: getJob.job_title,
                     id: getJob.user_id
                 },
-                usersAvailable: usersAvailable,
-                usersConfirmed: usersConfirmed,
+                usersAvailable,
+                usersConfirmed,
             }
 
             return jobMatchList
@@ -69,8 +69,8 @@ module.exports = {
             ...job,
             responsibilities: responsibilities && JSON.parse(responsibilities),
             required_skills: required_skills && JSON.parse(required_skills),
-            appliers: appliers && JSON.parse(appliers),
-            confirmed: confirmed && JSON.parse(confirmed),
+            appliers: appliers ? JSON.parse(appliers) : [],
+            confirmed: confirmed ? JSON.parse(confirmed) : [],
             seen: seen === 1
         }
 

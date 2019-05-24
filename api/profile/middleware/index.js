@@ -15,7 +15,7 @@ module.exports = {
             social_media: social_media && JSON.parse(social_media),
             projects: projects && JSON.parse(projects),
             past_experience: past_experience && JSON.parse(past_experience),
-            seen: seen && JSON.parse(seen)
+            seen: seen ? JSON.parse(seen) : []
         }
 
     },
