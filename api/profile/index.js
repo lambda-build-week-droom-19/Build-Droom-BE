@@ -92,8 +92,6 @@ router.post('/:db', auth, async (req, res) => {
 
     const { id, user_type } = req.decoded
 
-    console.log(id)
-
     try {
 
         switch (db) {

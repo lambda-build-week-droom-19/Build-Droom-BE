@@ -255,7 +255,7 @@ router.put('/:id', auth, async (req, res) => {
 
     const subject = req.decoded.id
 
-    if (Number(id) === Number(subject)) {
+    if (subject) {
 
         try {
 
