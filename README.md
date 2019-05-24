@@ -21,7 +21,7 @@ TDD - https://docs.google.com/document/d/1Bt6ERPdgEIbC9VOFHJVD-C303JZIB7RgRu8QRs
 {
     username: string,
     password: string,
-    user_type: integer(0 for seeker, 1 for employer)
+    user_type: integer(1 for seeker, 0 for employer)
 }
  ```
 
