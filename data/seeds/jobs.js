@@ -39,7 +39,13 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
-          niche: 1,
+
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]), niche: 1,
           seen: false
         },
         {
@@ -54,6 +60,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -69,6 +81,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            5, 6
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -84,6 +102,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            6
+          ]),
+          confirmed: JSON.stringify([
+            5
+          ]),
           niche: 1,
           seen: false
         },
@@ -99,6 +123,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -114,6 +144,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -129,6 +165,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -144,6 +186,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
@@ -159,6 +207,12 @@ exports.seed = function (knex, Promise) {
           description: 'description',
           responsibilities: JSON.stringify(['first', 'second', 'third']),
           required_skills: JSON.stringify(['required_skills', 'required_skills', 'required_skills']),
+          appliers: JSON.stringify([
+            4, 5
+          ]),
+          confirmed: JSON.stringify([
+            4
+          ]),
           niche: 1,
           seen: false
         },
