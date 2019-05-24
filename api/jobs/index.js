@@ -274,8 +274,6 @@ router.put('/:id', auth, async (req, res) => {
                     error: 'Could not update job.'
                 }
 
-            console.log('updateJob', updateJob)
-
             res.status(200).json(parseJob(updateJob))
 
         } catch (err) {
@@ -291,9 +289,15 @@ router.put('/:id', auth, async (req, res) => {
 
     } else {
 
-        const upJob = await Jobs.updateJob(id, stringifyJob(stringifyJob(body)))
+        body = stringifyJob(body)
+        const upJob = await Jobs.updateJob(id, { appliers: upJob.appliers })
         user_type === 1 ?
-            res.status(200).json({ appliers: upJob.appliers })
+            upJob ?
+                res.status(200).json(upJob)
+                :
+                res.status(404).json({
+                    error: 'Job does not exist.'
+                })
             :
             res.status(401).json({
                 error: 'You are not authorized to edit this job.'
