@@ -293,7 +293,7 @@ router.put('/:id', auth, async (req, res) => {
 
         const upJob = await Jobs.updateJob(id, stringifyJob(stringifyJob(body)))
         user_type === 1 ?
-            res.status(200).json({ ...upJob.appliers })
+            res.status(200).json({ appliers: upJob.appliers })
             :
             res.status(401).json({
                 error: 'You are not authorized to edit this job.'
